@@ -1,0 +1,125 @@
+--Player start position
+playerX = 0; playerY = 2;
+goalX = 8; goalY = 2;
+
+--Map's sight radius
+RADIUS = 0.2;
+--Map's background color
+BACKR = 0.1; BACKG = 0.2; BACKB = 0.3;
+
+--All map objects listed
+mapsX = {};
+mapsY = {};
+mapsC = {};
+mapsScaleX = {};
+mapsScaleY = {};
+
+NUMBEROFOBJECTS = 38+57;
+mapsX[1] = 0+6; mapsY[1] = 0; mapsC[1] = "red"; mapsScaleX[1] = 1; mapsScaleY[1] = 1;
+mapsX[2] = 1+6; mapsY[2] = 0; mapsC[2] = "red"; mapsScaleX[2] = 1; mapsScaleY[2] = 1;
+mapsX[3] = 2+6; mapsY[3] = 0; mapsC[3] = "green"; mapsScaleX[3] = 1; mapsScaleY[3] = 1;
+mapsX[4] = 3+6; mapsY[4] = 0; mapsC[4] = "green"; mapsScaleX[4] = 1; mapsScaleY[4] = 1;
+mapsX[5] = 4+6; mapsY[5] = 0; mapsC[5] = "green"; mapsScaleX[5] = 1; mapsScaleY[5] = 1;
+mapsX[6] = 5+6; mapsY[6] = 0; mapsC[6] = "red"; mapsScaleX[6] = 1; mapsScaleY[6] = 1;
+mapsX[7] = 6+6; mapsY[7] = 0; mapsC[7] = "blue"; mapsScaleX[7] = 1; mapsScaleY[7] = 1;
+mapsX[8] = 7+6; mapsY[8] = 0; mapsC[8] = "blue"; mapsScaleX[8] = 1; mapsScaleY[8] = 1;
+mapsX[9] = 8+6; mapsY[9] = 0; mapsC[9] = "white"; mapsScaleX[9] = 1; mapsScaleY[9] = 1;
+mapsX[10] = 15-1; mapsY[10] = 1.3; mapsC[10] = "green"; mapsScaleX[10] = 1; mapsScaleY[10] = 1;
+mapsX[11] = -1+6; mapsY[11] = 0; mapsC[11] = "green"; mapsScaleX[11] = 1; mapsScaleY[11] = 1;
+mapsX[12] = -2+6; mapsY[12] = 0; mapsC[12] = "green"; mapsScaleX[12] = 1; mapsScaleY[12] = 1;
+mapsX[13] = -3+6; mapsY[13] = 0; mapsC[13] = "red"; mapsScaleX[13] = 1; mapsScaleY[13] = 1;
+mapsX[14] = -4+6; mapsY[14] = 0; mapsC[14] = "blue"; mapsScaleX[14] = 1; mapsScaleY[14] = 1;
+mapsX[15] = -5+6; mapsY[15] = 0; mapsC[15] = "blue"; mapsScaleX[15] = 1; mapsScaleY[15] = 1;
+mapsX[16] = -6+6; mapsY[16] = 0; mapsC[16] = "white"; mapsScaleX[16] = 1; mapsScaleY[16] = 1;
+mapsX[17] = -7+6; mapsY[17] = 0; mapsC[17] = "white"; mapsScaleX[17] = 1; mapsScaleY[17] = 1;
+mapsX[18] = -7+6; mapsY[18] = 1; mapsC[18] = "green"; mapsScaleX[18] = 1; mapsScaleY[18] = 1;
+mapsX[19] = -9+6; mapsY[19] = 0; mapsC[19] = "blue"; mapsScaleX[19] = 1; mapsScaleY[19] = 1;
+mapsX[20] = -10+6; mapsY[20] = 0; mapsC[20] = "black"; mapsScaleX[20] = 1; mapsScaleY[20] = 1;
+mapsX[21] = -10+6; mapsY[21] = 1; mapsC[21] = "black"; mapsScaleX[21] = 1; mapsScaleY[21] = 1;
+mapsX[22] = -10+6; mapsY[22] = 2; mapsC[22] = "black"; mapsScaleX[22] = 1; mapsScaleY[22] = 1;
+mapsX[23] = -10+6; mapsY[23] = 3; mapsC[23] = "black"; mapsScaleX[23] = 1; mapsScaleY[23] = 1;
+mapsX[24] = -10+6; mapsY[24] = 4; mapsC[24] = "black"; mapsScaleX[24] = 1; mapsScaleY[24] = 1;
+mapsX[25] = -10+6; mapsY[25] = 5; mapsC[25] = "black"; mapsScaleX[25] = 1; mapsScaleY[25] = 1;
+mapsX[26] = -10+6; mapsY[26] = 6; mapsC[26] = "black"; mapsScaleX[26] = 1; mapsScaleY[26] = 1;
+mapsX[27] = -10+6; mapsY[27] = 7; mapsC[27] = "black"; mapsScaleX[27] = 1; mapsScaleY[27] = 1;
+mapsX[28] = -10+6; mapsY[28] = 8; mapsC[28] = "black"; mapsScaleX[28] = 1; mapsScaleY[28] = 1;
+mapsX[29] = -10+6; mapsY[29] = 9; mapsC[29] = "black"; mapsScaleX[29] = 1; mapsScaleY[29] = 1;
+mapsX[30] = -10+6; mapsY[30] = -1; mapsC[30] = "black"; mapsScaleX[30] = 1; mapsScaleY[30] = 1;
+mapsX[31] = -10+6; mapsY[31] = -2; mapsC[31] = "black"; mapsScaleX[31] = 1; mapsScaleY[31] = 1;
+mapsX[32] = -10+6; mapsY[32] = -3; mapsC[32] = "black"; mapsScaleX[32] = 1; mapsScaleY[32] = 1;
+mapsX[33] = -10+6; mapsY[33] = -4; mapsC[33] = "black"; mapsScaleX[33] = 1; mapsScaleY[33] = 1;
+mapsX[34] = -10+6; mapsY[34] = -5; mapsC[34] = "black"; mapsScaleX[34] = 1; mapsScaleY[34] = 1;
+mapsX[35] = -10+6; mapsY[35] = -6; mapsC[35] = "black"; mapsScaleX[35] = 1; mapsScaleY[35] = 1;
+mapsX[36] = -10+6; mapsY[36] = -7; mapsC[36] = "black"; mapsScaleX[36] = 1; mapsScaleY[36] = 1;
+mapsX[37] = -10+6; mapsY[37] = -8; mapsC[37] = "black"; mapsScaleX[37] = 1; mapsScaleY[37] = 1;
+mapsX[38] = -10+6; mapsY[38] = -9; mapsC[38] = "black"; mapsScaleX[38] = 1; mapsScaleY[38] = 1;
+mapsX[20+19] = 9+6; mapsY[20+19] = 0; mapsC[20+19] = "black"; mapsScaleX[20+19] = 1; mapsScaleY[20+19] = 1;
+mapsX[21+19] = 9+6; mapsY[21+19] = 1; mapsC[21+19] = "black"; mapsScaleX[21+19] = 1; mapsScaleY[21+19] = 1;
+mapsX[22+19] = 9+6; mapsY[22+19] = 2; mapsC[22+19] = "black"; mapsScaleX[22+19] = 1; mapsScaleY[22+19] = 1;
+mapsX[23+19] = 9+6; mapsY[23+19] = 3; mapsC[23+19] = "black"; mapsScaleX[23+19] = 1; mapsScaleY[23+19] = 1;
+mapsX[24+19] = 9+6; mapsY[24+19] = 4; mapsC[24+19] = "black"; mapsScaleX[24+19] = 1; mapsScaleY[24+19] = 1;
+mapsX[25+19] = 9+6; mapsY[25+19] = 5; mapsC[25+19] = "black"; mapsScaleX[25+19] = 1; mapsScaleY[25+19] = 1;
+mapsX[26+19] = 9+6; mapsY[26+19] = 6; mapsC[26+19] = "black"; mapsScaleX[26+19] = 1; mapsScaleY[26+19] = 1;
+mapsX[27+19] = 9+6; mapsY[27+19] = 7; mapsC[27+19] = "black"; mapsScaleX[27+19] = 1; mapsScaleY[27+19] = 1;
+mapsX[28+19] = 9+6; mapsY[28+19] = 8; mapsC[28+19] = "black"; mapsScaleX[28+19] = 1; mapsScaleY[28+19] = 1;
+mapsX[29+19] = 9+6; mapsY[29+19] = 9; mapsC[29+19] = "black"; mapsScaleX[29+19] = 1; mapsScaleY[29+19] = 1;
+mapsX[30+19] = 9+6; mapsY[30+19] = -1; mapsC[30+19] = "black"; mapsScaleX[30+19] = 1; mapsScaleY[30+19] = 1;
+mapsX[31+19] = 9+6; mapsY[31+19] = -2; mapsC[31+19] = "black"; mapsScaleX[31+19] = 1; mapsScaleY[31+19] = 1;
+mapsX[32+19] = 9+6; mapsY[32+19] = -3; mapsC[32+19] = "black"; mapsScaleX[32+19] = 1; mapsScaleY[32+19] = 1;
+mapsX[33+19] = 9+6; mapsY[33+19] = -4; mapsC[33+19] = "black"; mapsScaleX[33+19] = 1; mapsScaleY[33+19] = 1;
+mapsX[34+19] = 9+6; mapsY[34+19] = -5; mapsC[34+19] = "black"; mapsScaleX[34+19] = 1; mapsScaleY[34+19] = 1;
+mapsX[35+19] = 9+6; mapsY[35+19] = -6; mapsC[35+19] = "black"; mapsScaleX[35+19] = 1; mapsScaleY[35+19] = 1;
+mapsX[36+19] = 9+6; mapsY[36+19] = -7; mapsC[36+19] = "black"; mapsScaleX[36+19] = 1; mapsScaleY[36+19] = 1;
+mapsX[37+19] = 9+6; mapsY[37+19] = -8; mapsC[37+19] = "black"; mapsScaleX[37+19] = 1; mapsScaleY[37+19] = 1;
+mapsX[38+19] = 9+6; mapsY[38+19] = -9; mapsC[38+19] = "black"; mapsScaleX[38+19] = 1; mapsScaleY[38+19] = 1;
+mapsX[20+38] = 0+6; mapsY[20+38] = 9; mapsC[20+38] = "black"; mapsScaleX[20+38] = 1; mapsScaleY[20+38] = 1;
+mapsX[21+38] = 1+6; mapsY[21+38] = 9; mapsC[21+38] = "black"; mapsScaleX[21+38] = 1; mapsScaleY[21+38] = 1;
+mapsX[22+38] = 2+6; mapsY[22+38] = 9; mapsC[22+38] = "black"; mapsScaleX[22+38] = 1; mapsScaleY[22+38] = 1;
+mapsX[23+38] = 3+6; mapsY[23+38] = 9; mapsC[23+38] = "black"; mapsScaleX[23+38] = 1; mapsScaleY[23+38] = 1;
+mapsX[24+38] = 4+6; mapsY[24+38] = 9; mapsC[24+38] = "black"; mapsScaleX[24+38] = 1; mapsScaleY[24+38] = 1;
+mapsX[25+38] = 5+6; mapsY[25+38] = 9; mapsC[25+38] = "black"; mapsScaleX[25+38] = 1; mapsScaleY[25+38] = 1;
+mapsX[26+38] = 6+6; mapsY[26+38] = 9; mapsC[26+38] = "black"; mapsScaleX[26+38] = 1; mapsScaleY[26+38] = 1;
+mapsX[27+38] = 7+6; mapsY[27+38] = 9; mapsC[27+38] = "black"; mapsScaleX[27+38] = 1; mapsScaleY[27+38] = 1;
+mapsX[28+38] = 8+6; mapsY[28+38] = 9; mapsC[28+38] = "black"; mapsScaleX[28+38] = 1; mapsScaleY[28+38] = 1;
+mapsX[29+38] = 9+6; mapsY[29+38] = 9; mapsC[29+38] = "black"; mapsScaleX[29+38] = 1; mapsScaleY[29+38] = 1;
+mapsX[30+38] = -1+6; mapsY[30+38] = 9; mapsC[30+38] = "black"; mapsScaleX[30+38] = 1; mapsScaleY[30+38] = 1;
+mapsX[31+38] = -2+6; mapsY[31+38] = 9; mapsC[31+38] = "black"; mapsScaleX[31+38] = 1; mapsScaleY[31+38] = 1;
+mapsX[32+38] = -3+6; mapsY[32+38] = 9; mapsC[32+38] = "black"; mapsScaleX[32+38] = 1; mapsScaleY[32+38] = 1;
+mapsX[33+38] = -4+6; mapsY[33+38] = 9; mapsC[33+38] = "black"; mapsScaleX[33+38] = 1; mapsScaleY[33+38] = 1;
+mapsX[34+38] = -5+6; mapsY[34+38] = 9; mapsC[34+38] = "black"; mapsScaleX[34+38] = 1; mapsScaleY[34+38] = 1;
+mapsX[35+38] = -6+6; mapsY[35+38] = 9; mapsC[35+38] = "black"; mapsScaleX[35+38] = 1; mapsScaleY[35+38] = 1;
+mapsX[36+38] = -7+6; mapsY[36+38] = 9; mapsC[36+38] = "black"; mapsScaleX[36+38] = 1; mapsScaleY[36+38] = 1;
+mapsX[37+38] = -8+6; mapsY[37+38] = 9; mapsC[37+38] = "black"; mapsScaleX[37+38] = 1; mapsScaleY[37+38] = 1;
+mapsX[38+38] = -9+6; mapsY[38+38] = 9; mapsC[38+38] = "black"; mapsScaleX[38+38] = 1; mapsScaleY[38+38] = 1;
+mapsX[20+57] = 0+6; mapsY[20+57] = -9; mapsC[20+57] = "black"; mapsScaleX[20+57] = 1; mapsScaleY[20+57] = 1;
+mapsX[21+57] = 1+6; mapsY[21+57] = -9; mapsC[21+57] = "black"; mapsScaleX[21+57] = 1; mapsScaleY[21+57] = 1;
+mapsX[22+57] = 2+6; mapsY[22+57] = -9; mapsC[22+57] = "black"; mapsScaleX[22+57] = 1; mapsScaleY[22+57] = 1;
+mapsX[23+57] = 3+6; mapsY[23+57] = -9; mapsC[23+57] = "black"; mapsScaleX[23+57] = 1; mapsScaleY[23+57] = 1;
+mapsX[24+57] = 4+6; mapsY[24+57] = -9; mapsC[24+57] = "black"; mapsScaleX[24+57] = 1; mapsScaleY[24+57] = 1;
+mapsX[25+57] = 5+6; mapsY[25+57] = -9; mapsC[25+57] = "black"; mapsScaleX[25+57] = 1; mapsScaleY[25+57] = 1;
+mapsX[26+57] = 6+6; mapsY[26+57] = -9; mapsC[26+57] = "black"; mapsScaleX[26+57] = 1; mapsScaleY[26+57] = 1;
+mapsX[27+57] = 7+6; mapsY[27+57] = -9; mapsC[27+57] = "black"; mapsScaleX[27+57] = 1; mapsScaleY[27+57] = 1;
+mapsX[28+57] = 8+6; mapsY[28+57] = -9; mapsC[28+57] = "black"; mapsScaleX[28+57] = 1; mapsScaleY[28+57] = 1;
+mapsX[29+57] = 9+6; mapsY[29+57] = -9; mapsC[29+57] = "black"; mapsScaleX[29+57] = 1; mapsScaleY[29+57] = 1;
+mapsX[30+57] = -1+6; mapsY[30+57] = -9; mapsC[30+57] = "black"; mapsScaleX[30+57] = 1; mapsScaleY[30+57] = 1;
+mapsX[31+57] = -2+6; mapsY[31+57] = -9; mapsC[31+57] = "black"; mapsScaleX[31+57] = 1; mapsScaleY[31+57] = 1;
+mapsX[32+57] = -3+6; mapsY[32+57] = -9; mapsC[32+57] = "black"; mapsScaleX[32+57] = 1; mapsScaleY[32+57] = 1;
+mapsX[33+57] = -4+6; mapsY[33+57] = -9; mapsC[33+57] = "black"; mapsScaleX[33+57] = 1; mapsScaleY[33+57] = 1;
+mapsX[34+57] = -5+6; mapsY[34+57] = -9; mapsC[34+57] = "black"; mapsScaleX[34+57] = 1; mapsScaleY[34+57] = 1;
+mapsX[35+57] = -6+6; mapsY[35+57] = -9; mapsC[35+57] = "black"; mapsScaleX[35+57] = 1; mapsScaleY[35+57] = 1;
+mapsX[36+57] = -7+6; mapsY[36+57] = -9; mapsC[36+57] = "black"; mapsScaleX[36+57] = 1; mapsScaleY[36+57] = 1;
+mapsX[37+57] = -8+6; mapsY[37+57] = -9; mapsC[37+57] = "black"; mapsScaleX[37+57] = 1; mapsScaleY[37+57] = 1;
+mapsX[38+57] = -9+6; mapsY[38+57] = -9; mapsC[38+57] = "black"; mapsScaleX[38+57] = 1; mapsScaleY[38+57] = 1;
+
+function getObject(index)
+	if (index == -1) then
+		return playerX, playerY;
+	end
+	if (index == -2) then
+		return goalX, goalY;
+	end
+	if (index < NUMBEROFOBJECTS) then
+		return mapsX[index+1], mapsY[index+1], mapsC[index+1], mapsScaleX[index+1], mapsScaleY[index+1];
+	end
+	return -100;
+end

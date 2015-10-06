@@ -1,0 +1,31 @@
+radius 0.3
+fog 0.8 0.2 0.3
+player -1.82813 7.45082
+goal 3.28125 -0.688525
+nrOfObjects 26
+wall -0.351563 4.05738 green
+wall 1.28906 4.45082 green
+wall 3.02344 4.35246 green
+wall 4.125 4.57377 green
+wall 5.41406 4.42623 green
+wall 6.44531 4.5 green
+wall 7.3125 4.5 green
+wall 8.20313 4.64754 green
+wall 0.445313 2.55738 yellow
+wall -0.421875 2.63115 yellow
+wall -0.75 2.16393 yellow
+wall -0.726563 1.81967 yellow
+wall -0.679688 1.40164 yellow
+wall -0.632813 1.10656 yellow
+wall -0.46875 0.491803 yellow
+wall -0.0234375 -0.368852 yellow
+wall 0.421875 -0.565574 yellow
+wall 0.84375 -0.885246 yellow
+wall 1.35938 -0.909836 yellow
+wall 1.75781 -0.934426 yellow
+wall 3.1875 1.7459 blue
+wall 4.14844 1.57377 blue
+wall 4.96875 0.983607 blue
+wall 5.46094 -0.0245902 blue
+wall 5.76563 -1.42623 blue
+wall 5.34375 -2.13934 blue

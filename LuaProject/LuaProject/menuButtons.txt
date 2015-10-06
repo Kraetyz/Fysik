@@ -1,0 +1,50 @@
+function exitGame()
+	execute();
+end
+
+function startItUp()
+	startGame();
+end
+
+function goToEditor()
+	startEditor();
+end
+
+buttonone = {-15, -5, -13, -7, "ExitGame.bmp", exitGame} -- NWx, NWy, SEx, SEy, name, function
+buttontwo = {-3, 7, 3, 3, "PlayGame.bmp", startItUp} -- NWx, NWy, SEx, SEy, name, function
+buttonthree = {-3, -4, 3, -6, "Editor.bmp", goToEditor} -- NWx, NWy, SEx, SEy, name, function
+
+nrOfButtons = 3
+buttonList = {buttonone, buttontwo, buttonthree}
+
+function clickCheck(mouseX, mouseY)
+	for index=1, nrOfButtons do
+		if intersects(mouseX, mouseY, index) then
+			if buttonList[index][6] ~= nil then
+					buttonList[index][6]();
+					return true;
+			end
+		end
+	end
+	return false;
+end
+
+function intersects(mouseX, mouseY, buttonIndex)
+	if (mouseX < buttonList[buttonIndex][1]) then
+		return false
+	end
+	if (mouseX > buttonList[buttonIndex][3]) then
+		return false
+	end
+	if (mouseY < buttonList[buttonIndex][4]) then
+		return false
+	end
+	if (mouseY > buttonList[buttonIndex][2]) then
+		return false
+	end
+	return true
+end
+
+function getButton(index)
+	return buttonList[index][1], buttonList[index][2], buttonList[index][3], buttonList[index][4], buttonList[index][5]
+end
