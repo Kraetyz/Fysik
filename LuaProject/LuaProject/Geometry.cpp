@@ -25,10 +25,25 @@ Geometry::~Geometry()
 
 }
 
+#pragma endregion
+
+#pragma region collision
+
 bool Geometry::checkCollision(Geometry aGeom)
 {
-	//if (aGeom);
+	if (aGeom.myRadius == -1 && myRadius == -1)
+	{
+		if (aGeom.myHeight != -1 && aGeom.myWidth != -1 && myWidth != -1 && myHeight != -1)
+		{
+			//return BoxOnBoxColl(myPos, aGeom.myPos, myWidth, aGeom.myWidth, myHeight, aGeom.myHeight);
+		}
+		return 0;
+	}
 }
+
+#pragma region internal collision
+
+#pragma endregion
 
 #pragma endregion
 
