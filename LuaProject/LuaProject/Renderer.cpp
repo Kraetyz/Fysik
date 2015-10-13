@@ -34,7 +34,7 @@ void Renderer::Render(Button* toRender)
 
 	glActiveTexture(GL_TEXTURE0);
 	
-	glBindTexture(GL_TEXTURE_2D, toRender->getText());
+	glBindTexture(GL_TEXTURE_2D, ((GameObject*)toRender)->getText());
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
@@ -42,28 +42,12 @@ void Renderer::Render(Button* toRender)
 	glDeleteVertexArrays(1, &vao);
 }
 
-void Renderer::Render(GameObject* toRender, GameObject* player)
+void Renderer::Render(GameObject* toRender)
 {
 	GLuint prog = shader->getProgram();
-	GLuint pos = glGetUniformLocation(prog, "radius");
-	glUniform1f(pos, radius);
-	pos = glGetUniformLocation(prog, "backColor");
-	glUniform3fv(pos, 1, &backColor[0]);
-	if (player)
-	{
-		player->getCorners(playerCorners);
-		playerPos.x = playerCorners[0].x + playerCorners[1].x + playerCorners[2].x + playerCorners[3].x;
-		playerPos.x = playerPos.x / 4;
-		playerPos.y = playerCorners[0].y + playerCorners[1].y + playerCorners[2].y + playerCorners[3].y;
-		playerPos.y = playerPos.y / 4;
-		
-		GLuint playerPosID = glGetUniformLocation(prog, "playerPos");
-		glUniform2fv(playerPosID, 1, &playerPos[0]);
-	}	
 
 	vec2 corners[4];
 	toRender->getCorners(corners);
-	vec3 color = toRender->getColor();
 
 	GLuint buf;
 	glGenBuffers(1, &buf);
@@ -79,8 +63,9 @@ void Renderer::Render(GameObject* toRender, GameObject* player)
 	GLuint vertexPos = glGetAttribLocation(prog, "vertex_position");
 	glVertexAttribPointer(vertexPos, 2, GL_FLOAT, GL_FALSE, sizeof(float)*2, (void*)0);
 
-	GLuint colorID = glGetUniformLocation(prog, "color");
-	glUniform3fv(colorID, 1, &color[0]);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, toRender->getText());
+
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
 	glDeleteBuffers(1, &buf);

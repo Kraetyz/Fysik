@@ -17,7 +17,7 @@ public:
 	Renderer();
 	~Renderer();
 	void Render(Button* toRender);
-	void Render(GameObject* toRender, GameObject* player = 0);
+	void Render(GameObject* toRender);
 	void setProgram();
 	void setBtnProgram();
 	void setRadius(float r);

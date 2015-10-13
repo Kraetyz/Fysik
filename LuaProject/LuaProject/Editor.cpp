@@ -86,7 +86,7 @@ void Editor::Render()
 {
 	render->setProgram();
 	if (player)
-		render->Render(player, player);
+		render->Render(player);
 	for (int c = 0; c < nrOfObjects; c++)
 	{
 		render->Render(allObjects[c]);
@@ -106,8 +106,7 @@ string Editor::update()
 
 void Editor::goalUpdate()
 {
-	if (goal)
-		goal->updateColor();
+	
 }
 
 void Editor::saveMap()
@@ -178,7 +177,7 @@ void Editor::saveMap()
 		wX = pos.x;
 		wY = pos.y;
 		line = stringstream();
-		line << "wall " << wX << " " << wY << " " << allObjects[i]->getColorString();
+		line << "wall " << wX << " " << wY << " " << "HEIL.bmp";
 
 		out << line.str() << endl;
 	}

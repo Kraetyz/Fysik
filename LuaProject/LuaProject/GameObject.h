@@ -19,26 +19,22 @@ class GameObject
 {
 private:
 	vec2 corners[4];
-	vec3 color;
 	string clr;
 	vec2 origPos;
+
+	GLuint tex;
 protected:
 	void setPos(vec2 pos);
-	void setColor(vec3 col);
+	void emptyTexture();
+	bool loadBMP(string name);
 public:
 	GameObject();
-	GameObject(vec2 pos, string clr, float sizeX, float sizeY);
+	GameObject(vec2 pos, string texName, float sizeX, float sizeY);
 	void getCorners(vec2 toFill[]);
-	vec3 getColor();
-	string getColorString();
+	GLuint getText();
 	vec2 getOrigPos();
-	void updateColor();
-	void goalUpdate();
 	void moveX(float newX, int index);
 	void moveY(float newY, int index);
-	int rForward;
-	int gForward;
-	int bForward;
 };
 
 #endif

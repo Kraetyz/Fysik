@@ -4,40 +4,41 @@ ShaderHolder::ShaderHolder()
 {
 	const char* vertex_shader = R"(
 		#version 400
-		layout(location = 0) in vec2 vertex_position;
-		out vec2 position;
+layout(location = 0) in vec2 vertex_position;
+out vec2 UV;
 
-		void main ()
-		{
-			gl_Position = vec4(vertex_position, 1.0, 1.0);
-			position = vec2(gl_Position.x, gl_Position.y);
-		}
+void main ()
+{
+	if (gl_VertexID == 0)
+	{
+		UV = vec2(0,1);
+	}
+	if (gl_VertexID == 1)
+	{
+		UV = vec2(0,0);
+	}
+	if (gl_VertexID == 2)
+	{
+		UV = vec2(1,1);
+	}
+	if (gl_VertexID == 3)
+	{
+		UV = vec2(1,0);
+	}
+	gl_Position = vec4(vertex_position, 1.0, 1.0);
+}
 	)";
 
 	const char* fragment_shader = R"(
 		#version 400
-		out vec4 fragment_color;
-		uniform vec3 color;
-		in vec2 position;
-
-		uniform vec2 playerPos;
-		uniform float radius;
-		uniform vec3 backColor;
-
-		void main ()
-		{
-			float ratio = 1280.0/768.0;
-			vec2 dist = playerPos - position;
-			dist.y = dist.y/ratio;
-			if (length(dist) < radius)
-			{
-				fragment_color = vec4(color, 1.0);
-			}
-			else
-			{
-				fragment_color = vec4(backColor, 1);
-			}
-		}
+out vec4 fragment_color;
+uniform sampler2D texSampler;
+in vec2 UV;
+		
+void main ()
+{
+	fragment_color = texture(texSampler, vec2(UV.s, 1-UV.t));
+}
 	)";
 	//create vertex shader
 	GLuint vs = glCreateShader(GL_VERTEX_SHADER);
