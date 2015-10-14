@@ -90,50 +90,9 @@ static int goToGame(lua_State* L)
 	return 0;
 }
 
-static int goToEditor(lua_State* L)
-{
-	delete state;
-	state = new Editor();
-	if (luaL_loadfile(buttonState, "editorButtons.txt") || lua_pcall(buttonState, 0, 0, 0))
-		throw;
-	setupButtons();
-	return 0;
-}
-
 static int restartGame(lua_State* L)
 {
 	((Game*)state)->restart();
-	return 0;
-}
-
-static int screenClick(lua_State* L)
-{
-	POINT pCur;
-	GetCursorPos(&pCur);
-	ScreenToClient(window, &pCur);
-	float mouseX = ((pCur.x - (1280 / 2)) / 640.0f) * 15;
-	float mouseY = (-(pCur.y - (768 / 2)) / 366.0f) * 9;
-	((Editor*)state)->giveCursorPos(glm::vec2(mouseX, mouseY));
-	return 0;
-}
-
-static int setMode(lua_State* L)
-{
-	int mode = lua_tointeger(L, -1);
-	lua_pop(L, 1);
-
-	((Editor*)state)->setMode(mode);
-
-	return 0;
-}
-
-static int setColor(lua_State* L)
-{
-	string color = lua_tostring(L, -1);
-	lua_pop(L, 1);
-	
-	((Editor*)state)->setCurrentColor(color);
-
 	return 0;
 }
 
@@ -187,11 +146,7 @@ void registerLuaFuncs()
 	lua_register(buttonState, "execute", killThroughLua);
 	lua_register(buttonState, "startGame", goToGame);
 	lua_register(buttonState, "restartGame", restartGame);
-	lua_register(buttonState, "startEditor", goToEditor);
-	lua_register(buttonState, "click", screenClick);
-	lua_register(buttonState, "setMode", setMode);
 	lua_register(buttonState, "backToMenu", goToMenu);
-	lua_register(buttonState, "editorColor", setColor);
 }
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
@@ -286,7 +241,7 @@ HWND InitWindow(HINSTANCE hInstance)
 	wcex.style = CS_HREDRAW | CS_VREDRAW;
 	wcex.lpfnWndProc = WndProc;
 	wcex.hInstance = hInstance;
-	wcex.lpszClassName = L"LUAbyrinth";
+	wcex.lpszClassName = L"Physics";
 	if (!RegisterClassEx(&wcex))
 		return false;
 
@@ -294,8 +249,8 @@ HWND InitWindow(HINSTANCE hInstance)
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
 	HWND handle = CreateWindow(
-		L"LUAbyrinth",
-		L"LUAbyrinth",
+		L"Physics",
+		L"Physics",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
