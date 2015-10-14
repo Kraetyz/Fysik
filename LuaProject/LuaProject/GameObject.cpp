@@ -3,11 +3,10 @@
 void GameObject::setPos(vec2 pos)
 {
 	gInfo.setPos(pos);
-	float ratio = 1280.0f / 768.0f;
-	UV[NW] = vec2(pos.x - sizeX*0.032, pos.y - sizeY*0.032*ratio);
-	UV[NE] = vec2(pos.x + sizeX*0.032, pos.y - sizeY*0.032*ratio);
-	UV[SW] = vec2(pos.x - sizeX*0.032, pos.y + sizeY*0.032*ratio);
-	UV[SE] = vec2(pos.x + sizeX*0.032, pos.y + sizeY*0.032*ratio);
+	UV[NW] = vec2(pos.x - sizeX*0.032, pos.y - sizeY*0.032);
+	UV[NE] = vec2(pos.x + sizeX*0.032, pos.y - sizeY*0.032);
+	UV[SW] = vec2(pos.x - sizeX*0.032, pos.y + sizeY*0.032);
+	UV[SE] = vec2(pos.x + sizeX*0.032, pos.y + sizeY*0.032);
 }
 
 GameObject::GameObject()
@@ -16,21 +15,20 @@ GameObject::GameObject()
 
 GameObject::GameObject(vec2 pos, string texName, float sX, float sY)
 {
-	float ratio = 1280.0f / 768.0f;
 	origPos = pos;
 	pos.x = pos.x*0.064;
-	pos.y = pos.y*0.064*ratio;
+	pos.y = pos.y*0.064;
 	sizeX = sX;
 	sizeY = sY;
-	UV[NW] = vec2(pos.x - sizeX*0.032, pos.y - sizeY*0.032*ratio);
-	UV[NE] = vec2(pos.x + sizeX*0.032, pos.y - sizeY*0.032*ratio);
-	UV[SW] = vec2(pos.x - sizeX*0.032, pos.y + sizeY*0.032*ratio);
-	UV[SE] = vec2(pos.x + sizeX*0.032, pos.y + sizeY*0.032*ratio);
+	UV[NW] = vec2(pos.x - sizeX*0.032, pos.y - sizeY*0.032);
+	UV[NE] = vec2(pos.x + sizeX*0.032, pos.y - sizeY*0.032);
+	UV[SW] = vec2(pos.x - sizeX*0.032, pos.y + sizeY*0.032);
+	UV[SE] = vec2(pos.x + sizeX*0.032, pos.y + sizeY*0.032);
 
 	//loadBMP(texName);
 	loadBMP("ball.bmp");
 
-	gInfo = Geometry(pos, 0.032);
+	gInfo = Geometry(pos, sizeX*0.032);
 }
 
 void GameObject::getUV(vec2 toFill[])
