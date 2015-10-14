@@ -6,16 +6,11 @@ function startItUp()
 	startGame();
 end
 
-function goToEditor()
-	startEditor();
-end
-
 buttonone = {-15, -5, -13, -7, "ExitGame.bmp", exitGame} -- NWx, NWy, SEx, SEy, name, function
 buttontwo = {-3, 7, 3, 3, "PlayGame.bmp", startItUp} -- NWx, NWy, SEx, SEy, name, function
-buttonthree = {-3, -4, 3, -6, "Editor.bmp", goToEditor} -- NWx, NWy, SEx, SEy, name, function
 
-nrOfButtons = 3
-buttonList = {buttonone, buttontwo, buttonthree}
+nrOfButtons = 2
+buttonList = {buttonone, buttontwo}
 
 function clickCheck(mouseX, mouseY)
 	for index=1, nrOfButtons do

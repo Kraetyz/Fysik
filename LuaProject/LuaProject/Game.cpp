@@ -66,29 +66,6 @@ void Game::createPlayer()
 	lua_pop(L, 1);
 }
 
-void Game::createGoal()
-{
-	lua_getglobal(L, "ErrorHandler");
-	luaErrorHandlerPos = lua_gettop(L);
-	vec2 ret;
-	lua_getglobal(L, "getObject");
-	lua_pushinteger(L, -2);
-	int error = lua_pcall(L, 1, 2, luaErrorHandlerPos);
-	if (error)
-	{
-		std::cout << " ERROR: " << std::endl;
-		std::cout << lua_tostring(L, -1) << std::endl;
-		lua_pop(L, 1);
-	}
-	ret.y = lua_tonumber(L, -1);
-	lua_pop(L, 1);
-	ret.x = lua_tonumber(L, -1);
-	lua_pop(L, 1);
-
-	goal = new GameObject(ret, "HEIL.bmp", 0.4, 0.4);
-	lua_pop(L, 1);
-}
-
 void Game::createObject(int index)
 {
 	lua_getglobal(L, "ErrorHandler");
@@ -140,10 +117,6 @@ void Game::Render()
 	{
 		render->Render(allObjects[c]);
 	}
-
-	render->Render(goal);
-
-	
 }
 
 string Game::update()
@@ -154,30 +127,6 @@ string Game::update()
 	vec2 corners[4];
 	player->getCorners(corners);
 	vec2 tempCorners[4] = { vec2(corners[0]), vec2(corners[1]), vec2(corners[2]), vec2(corners[3]) };
-
-	if (GetKeyState('R') && GetAsyncKeyState('R'))
-	{
-		if (luaL_loadfile(L, "testscript.txt") || lua_pcall(L, 0, 0, luaErrorHandlerPos))
-		{
-			std::cout << " ERROR: " << std::endl;
-			std::cout << lua_tostring(L, -1) << std::endl;
-			lua_pop(L, 1);
-		}
-		if (luaL_loadfile(L, "map.txt") || lua_pcall(L, 0, 0, luaErrorHandlerPos))
-		{
-			std::cout << " ERROR: " << std::endl;
-			std::cout << lua_tostring(L, -1) << std::endl;
-			lua_pop(L, 1);
-		}
-		delete player;
-		createPlayer();
-		for (int c = 0; c < nrOfObjects; c++)
-		{
-			delete allObjects[c];
-			createObject(c);
-		}
-		render->setClearColor(0, 0, 0);
-	}
 
 	float oldX, oldY;
 	float newX, newY;
@@ -290,71 +239,7 @@ string Game::update()
 	}
 	lua_pop(L, 1);
 
-	player->getCorners(corners);
-
-	if (goalCollide(corners))
-	{
-		for (int c = 0; c < 4; c++)
-		{
-			return "GOOOOOAAAAAAL";
-		}
-	}
-
-	this->goalUpdate();
-
-	player->getCorners(corners);
-	if (collide(player->getGeoInfo()))
-	{
-		for (int c = 0; c < 4; c++)
-		{
-			player->moveY(tempCorners[c].y, c);
-		}
-	}
-
 	return "";
-}
-
-bool Game::collide(vec2 playerCorners[])
-{
-	lua_getglobal(L, "ErrorHandler");
-	luaErrorHandlerPos = lua_gettop(L);
-	bool hit = false;
-	vec2 map[4];
-	float cNWx = playerCorners[NW].x;
-	float cSEx = playerCorners[SE].x;
-	float cNWy = playerCorners[NW].y;
-	float cSEy = playerCorners[SE].y;
-
-	for (int c = 0; c < nrOfObjects && !hit; c++)
-	{
-		allObjects[c]->getCorners(map);
-		lua_getglobal(L, "intersects");
-		float eNWx = map[NW].x;
-		float eSEx = map[SE].x;
-		float eNWy = map[NW].y;
-		float eSEy = map[SE].y;
-		lua_pushnumber(L, cNWx);
-		lua_pushnumber(L, cNWy);
-		lua_pushnumber(L, cSEx);
-		lua_pushnumber(L, cSEy);
-		lua_pushnumber(L, eNWx);
-		lua_pushnumber(L, eNWy);
-		lua_pushnumber(L, eSEx);
-		lua_pushnumber(L, eSEy);
-		if (lua_pcall(L, 8, 1, luaErrorHandlerPos))
-		{
-			std::cout << " ERROR: " << std::endl;
-			std::cout << lua_tostring(L, -1) << std::endl;
-			lua_pop(L, 1);
-		}
-		else
-		{
-			hit = lua_toboolean(L, -1);
-			lua_pop(L, 1);
-		}
-	}
-	lua_pop(L, 1);
-	return hit;
 }
 
 bool Game::collide(Geometry playerGeo)
@@ -368,57 +253,14 @@ bool Game::collide(Geometry playerGeo)
 	return hit;
 }
 
-bool Game::goalCollide(vec2 playerCorners[])
-{
-	lua_getglobal(L, "ErrorHandler");
-	luaErrorHandlerPos = lua_gettop(L);
-	bool hit = false;
-	vec2 map[4];
-	goal->getCorners(map);
-	lua_getglobal(L, "intersects");
-	float cNWx = playerCorners[NW].x;
-	float cSEx = playerCorners[SE].x;
-	float cNWy = playerCorners[NW].y;
-	float cSEy = playerCorners[SE].y;
-	float eNWx = map[NW].x;
-	float eSEx = map[SE].x;
-	float eNWy = map[NW].y;
-	float eSEy = map[SE].y;
-	lua_pushnumber(L, cNWx);
-	lua_pushnumber(L, cNWy);
-	lua_pushnumber(L, cSEx);
-	lua_pushnumber(L, cSEy);
-	lua_pushnumber(L, eNWx);
-	lua_pushnumber(L, eNWy);
-	lua_pushnumber(L, eSEx);
-	lua_pushnumber(L, eSEy);
-
-	int error = lua_pcall(L, 8, 1, luaErrorHandlerPos);
-	if (error)
-	{
-		std::cout << " ERROR: " << std::endl;
-		std::cout << lua_tostring(L, -1) << std::endl;
-		lua_pop(L, 1);
-	}
-	else
-	{
-		hit = lua_toboolean(L, -1);
-		lua_pop(L, 1);
-	}
-	lua_pop(L, 1);
-
-	return hit;
-}
-
-void Game::goalUpdate()
-{
-	
-}
-
 void Game::restart()
 {
-	delete player;
-	createPlayer();
+	vec2 oPos = player->getOrigPos();
+	for (int c = 0; c < 4; c++)
+	{
+		player->moveX(oPos.x, c);
+		player->moveY(oPos.y, c);
+	}
 }
 
 void Game::loadMap()
@@ -468,19 +310,6 @@ void Game::loadMap()
 			if (player)
 				delete player;
 			player = new GameObject(vec2(pX, pY), "ball.bmp", 0.8, 0.8);
-		}
-
-		else if (token == "goal")
-		{
-			token = "";
-			ss >> token;
-			float gX = atof(token.c_str());
-			token = "";
-			ss >> token;
-			float gY = atof(token.c_str());
-			if (goal)
-				delete goal;
-			goal = new GameObject(vec2(gX, gY), "HEIL.bmp", 0.4, 0.4);
 		}
 
 		else if (token == "nrOfObjects")

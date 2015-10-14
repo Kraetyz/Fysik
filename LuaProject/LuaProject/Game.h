@@ -5,7 +5,7 @@
 #include "Lua/lauxlib.h"
 #include "Lua/lualib.h"
 
-#include<iostream>
+#include <iostream>
 
 #include "State.h"
 #include "Renderer.h"
@@ -14,7 +14,6 @@
 class Game : public State
 {
 private:
-	GameObject* goal = 0;
 	GameObject* player = 0;
 	GameObject** allObjects = 0;
 	int nrOfObjects;
@@ -22,12 +21,8 @@ private:
 	//lua_State* map = 0;
 	int luaErrorHandlerPos = 0;
 
-	bool collide(vec2 playerCorners[]);
 	bool collide(Geometry playerGeo);
-	bool goalCollide(vec2 playerCorners[]);
 
-	void goalUpdate();
-	void createGoal();
 	void createPlayer();
 	void createObject(int index);
 public:
