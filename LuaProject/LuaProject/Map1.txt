@@ -1,5 +1,4 @@
-radius 0.3
-fog 0.8 0.2 0.3
+fog 0.2 0.2 0.3
 player -1.82813 7.45082
 nrOfObjects 3
 wall 0 4.0 green
