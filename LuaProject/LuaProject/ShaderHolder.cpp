@@ -38,6 +38,10 @@ in vec2 UV;
 void main ()
 {
 	fragment_color = texture(texSampler, vec2(UV.s, 1-UV.t));
+	if (fragment_color.xyz == vec3(1,0,1))
+	{
+		fragment_color.a = 0;
+	}
 }
 	)";
 	//create vertex shader

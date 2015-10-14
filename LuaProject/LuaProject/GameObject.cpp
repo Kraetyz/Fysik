@@ -24,6 +24,8 @@ GameObject::GameObject(vec2 pos, string texName, float sizeX, float sizeY)
 	corners[SE] = vec2(pos.x + sizeX*0.032, pos.y + sizeY*0.032*ratio);
 
 	loadBMP(texName);
+
+	gInfo = Geometry(pos, 0.032);
 }
 
 void GameObject::getCorners(vec2 toFill[])

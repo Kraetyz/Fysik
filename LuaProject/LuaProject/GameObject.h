@@ -6,6 +6,7 @@
 #include "glm/glm/glm.hpp"
 #include "glm/glm/gtx/transform.hpp"
 #include <string>
+#include "Geometry.h"
 
 #define NW 0
 #define SW 1
@@ -23,6 +24,8 @@ private:
 	vec2 origPos;
 
 	GLuint tex;
+
+	Geometry gInfo;
 protected:
 	void setPos(vec2 pos);
 	void emptyTexture();
@@ -35,6 +38,8 @@ public:
 	vec2 getOrigPos();
 	void moveX(float newX, int index);
 	void moveY(float newY, int index);
+
+	Geometry getGeoInfo(){return gInfo;}
 };
 
 #endif

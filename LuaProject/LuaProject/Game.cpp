@@ -176,16 +176,7 @@ string Game::update()
 			delete allObjects[c];
 			createObject(c);
 		}
-		lua_getglobal(L, "RADIUS");
-		render->setRadius(lua_tonumber(L, -1));
-		lua_getglobal(L, "BACKR");
-		float r = lua_tonumber(L, -1);
-		lua_getglobal(L, "BACKG");
-		float g = lua_tonumber(L, -1);
-		lua_getglobal(L, "BACKB");
-		float b = lua_tonumber(L, -1);
-		lua_pop(L, 3);
-		render->setClearColor(r, g, b);
+		render->setClearColor(0, 0, 0);
 	}
 
 	float oldX, oldY;
@@ -236,7 +227,7 @@ string Game::update()
 	}
 
 	player->getCorners(corners);
-	if (collide(corners))
+	if (collide(player->getGeoInfo()))
 	{
 		for (int c = 0; c < 4; c++)
 		{
@@ -290,7 +281,7 @@ string Game::update()
 	}
 
 	player->getCorners(corners);
-	if (collide(corners))
+	if (collide(player->getGeoInfo()))
 	{
 		for (int c = 0; c < 4; c++)
 		{
@@ -312,7 +303,7 @@ string Game::update()
 	this->goalUpdate();
 
 	player->getCorners(corners);
-	if (collide(corners))
+	if (collide(player->getGeoInfo()))
 	{
 		for (int c = 0; c < 4; c++)
 		{
@@ -363,6 +354,17 @@ bool Game::collide(vec2 playerCorners[])
 		}
 	}
 	lua_pop(L, 1);
+	return hit;
+}
+
+bool Game::collide(Geometry playerGeo)
+{
+	bool hit = false;
+	for (int c = 0; c < nrOfObjects && !hit; c++)
+	{
+		Geometry g = allObjects[c]->getGeoInfo();
+		hit = playerGeo.checkCollision(g);
+	}
 	return hit;
 }
 
@@ -465,7 +467,7 @@ void Game::loadMap()
 			float pY = atof(token.c_str());
 			if (player)
 				delete player;
-			player = new GameObject(vec2(pX, pY), "Hej.bmp", 0.8, 0.8);
+			player = new GameObject(vec2(pX, pY), "ball.bmp", 0.8, 0.8);
 		}
 
 		else if (token == "goal")

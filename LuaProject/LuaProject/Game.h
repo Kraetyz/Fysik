@@ -23,6 +23,7 @@ private:
 	int luaErrorHandlerPos = 0;
 
 	bool collide(vec2 playerCorners[]);
+	bool collide(Geometry playerGeo);
 	bool goalCollide(vec2 playerCorners[]);
 
 	void goalUpdate();

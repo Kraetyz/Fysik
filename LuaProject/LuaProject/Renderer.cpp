@@ -2,6 +2,8 @@
 
 Renderer::Renderer()
 {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	shader = new ShaderHolder();
 	playerCorners[0] = playerCorners[1] = playerCorners[2] = playerCorners[3] = vec2(0, 0);
 	radius = 1.0f;
