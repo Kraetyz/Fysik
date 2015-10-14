@@ -22,9 +22,6 @@ private:
 	int luaErrorHandlerPos = 0;
 
 	bool collide(Geometry playerGeo);
-
-	void createPlayer();
-	void createObject(int index);
 public:
 	Game();
 	~Game();

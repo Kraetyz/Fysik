@@ -19,28 +19,28 @@ using namespace std;
 class GameObject
 {
 private:
-	vec2 corners[4];
+	vec2 UV[4];
+	float sizeX, sizeY;
 	string clr;
 	vec2 origPos;
 
 	GLuint tex;
 
 	Geometry gInfo;
+
+	void updateUV(float dx, float dy);
 protected:
-	void setPos(vec2 pos);
 	void emptyTexture();
 	bool loadBMP(string name);
 public:
 	GameObject();
 	GameObject(vec2 pos, string texName, float sizeX, float sizeY);
-	void getCorners(vec2 toFill[]);
+	void getUV(vec2 toFill[]);
 	GLuint getText();
 	vec2 getOrigPos();
-	void moveX(float newX, int index);
-	void moveY(float newY, int index);
-
+	void move(float dx, float dy);
+	void setPos(vec2 pos);
 	Geometry getGeoInfo(){return gInfo;}
-	void updateGeoInfo(float x, float y);
 };
 
 #endif
