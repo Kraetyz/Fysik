@@ -61,10 +61,10 @@ bool Geometry::checkCollision(Geometry aGeom)
 		return 0;
 	}
 	//aGeom is a sphere
-	else if (aGeom.myRadius > 0)
+	else if (aGeom.myRadius >= 0)
 	{
 		//this is a sphere
-		if (myRadius > 0)
+		if (myRadius >= 0)
 		{
 			return SphereOnSphereColl(myPos, aGeom.myPos, myRadius, aGeom.myRadius);
 		}

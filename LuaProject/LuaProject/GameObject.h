@@ -40,6 +40,7 @@ public:
 	void moveY(float newY, int index);
 
 	Geometry getGeoInfo(){return gInfo;}
+	void updateGeoInfo(float x, float y);
 };
 
 #endif

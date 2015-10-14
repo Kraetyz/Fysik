@@ -166,6 +166,7 @@ void buttonRender()
 
 void Update()
 {
+	Sleep(1000 / 60);
 	string msg = state->update();
 	if (msg == "GOOOOOAAAAAAL")
 	{

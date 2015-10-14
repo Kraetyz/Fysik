@@ -155,6 +155,10 @@ string Game::update()
 	player->getCorners(corners);
 	vec2 tempCorners[4] = { vec2(corners[0]), vec2(corners[1]), vec2(corners[2]), vec2(corners[3]) };
 
+	float playerCentX = (corners[0].x + corners[1].x + corners[2].x + corners[3].x) / 4.0;
+	float playerCentY = (corners[0].y + corners[1].y + corners[2].y + corners[3].y) / 4.0;
+	player->updateGeoInfo(playerCentX, playerCentY);
+
 	if (GetKeyState('R') && GetAsyncKeyState('R'))
 	{
 		if (luaL_loadfile(L, "testscript.txt") || lua_pcall(L, 0, 0, luaErrorHandlerPos))
@@ -224,6 +228,7 @@ string Game::update()
 				player->moveX(newX, c);
 			}
 		}
+		
 	}
 
 	player->getCorners(corners);
@@ -232,6 +237,9 @@ string Game::update()
 		for (int c = 0; c < 4; c++)
 		{
 			player->moveX(tempCorners[c].x, c);
+			float playerCentX = (tempCorners[0].x + tempCorners[1].x + tempCorners[2].x + tempCorners[3].x) / 4.0;
+			float playerCentY = (tempCorners[0].y + tempCorners[1].y + tempCorners[2].y + tempCorners[3].y) / 4.0;
+			player->updateGeoInfo(playerCentY, playerCentX);
 		}
 	}
 
@@ -286,6 +294,9 @@ string Game::update()
 		for (int c = 0; c < 4; c++)
 		{
 			player->moveY(tempCorners[c].y, c);
+			float playerCentX = (tempCorners[0].x + tempCorners[1].x + tempCorners[2].x + tempCorners[3].x) / 4.0;
+			float playerCentY = (tempCorners[0].y + tempCorners[1].y + tempCorners[2].y + tempCorners[3].y) / 4.0;
+			player->updateGeoInfo(playerCentY, playerCentX);
 		}
 	}
 	lua_pop(L, 1);
@@ -308,8 +319,15 @@ string Game::update()
 		for (int c = 0; c < 4; c++)
 		{
 			player->moveY(tempCorners[c].y, c);
+			float playerCentX = (tempCorners[0].x + tempCorners[1].x + tempCorners[2].x + tempCorners[3].x) / 4.0;
+			float playerCentY = (tempCorners[0].y + tempCorners[1].y + tempCorners[2].y + tempCorners[3].y) / 4.0;
+			player->updateGeoInfo(playerCentY, playerCentX);
 		}
 	}
+
+
+
+	
 
 	return "";
 }
