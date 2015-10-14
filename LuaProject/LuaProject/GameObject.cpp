@@ -23,9 +23,10 @@ GameObject::GameObject(vec2 pos, string texName, float sizeX, float sizeY)
 	corners[SW] = vec2(pos.x - sizeX*0.032, pos.y + sizeY*0.032*ratio);
 	corners[SE] = vec2(pos.x + sizeX*0.032, pos.y + sizeY*0.032*ratio);
 
-	loadBMP(texName);
+	//loadBMP(texName);
+	loadBMP("ball.bmp");
 
-	gInfo = Geometry(pos, 0.032);
+	gInfo = Geometry(pos, 0.02);
 }
 
 void GameObject::getCorners(vec2 toFill[])
@@ -44,11 +45,13 @@ vec2 GameObject::getOrigPos()
 void GameObject::moveX(float newX, int index)
 {
 	corners[index].x = newX;
+	gInfo.setPos(vec2(newX, gInfo.getPos().y));
 }
 
 void GameObject::moveY(float newY, int index)
 {
 	corners[index].y = newY;
+	gInfo.setPos(vec2(gInfo.getPos().x, newY));
 }
 
 void GameObject::emptyTexture()
