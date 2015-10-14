@@ -88,6 +88,13 @@ string Game::update()
 		player->setPos(pPlayer);
 
 	lua_pop(L, 1);
+
+	Physics* p = Physics::getPhysics();
+	p->gravity(player);
+
+	if (collide(player->getGeoInfo()))
+		player->setPos(pPlayer);
+
 	return "";
 }
 

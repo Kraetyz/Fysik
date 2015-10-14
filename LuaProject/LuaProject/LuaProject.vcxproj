@@ -97,6 +97,7 @@
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ShaderHolder.cpp" />
     <ClCompile Include="State.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="Lua\luaconf.h" />
     <ClInclude Include="Lua\lualib.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Physics.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ShaderHolder.h" />
     <ClInclude Include="State.h" />

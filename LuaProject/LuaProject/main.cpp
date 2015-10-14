@@ -127,14 +127,6 @@ void Update()
 {
 	Sleep(1000 / 60);
 	string msg = state->update();
-	if (msg == "GOOOOOAAAAAAL")
-	{
-		delete state;
-		state = new Menu();
-		if (luaL_loadfile(buttonState, "menuButtons.txt") || lua_pcall(buttonState, 0, 0, 0))
-			throw;
-		setupButtons();
-	}
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	buttonRender();
