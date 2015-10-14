@@ -273,6 +273,29 @@ string Game::update()
 	}
 	lua_pop(L, 1);
 
+	if (GetKeyState('R') && GetAsyncKeyState('R'))
+	{
+		if (luaL_loadfile(L, "testscript.txt") || lua_pcall(L, 0, 0, luaErrorHandlerPos))
+		{
+			std::cout << " ERROR: " << std::endl;
+			std::cout << lua_tostring(L, -1) << std::endl;
+			lua_pop(L, 1);
+		}
+		if (luaL_loadfile(L, "map.txt") || lua_pcall(L, 0, 0, luaErrorHandlerPos))
+		{
+			std::cout << " ERROR: " << std::endl;
+			std::cout << lua_tostring(L, -1) << std::endl;
+			lua_pop(L, 1);
+		}
+		delete player;
+		createPlayer();
+		for (int c = 0; c < nrOfObjects; c++)
+		{
+			delete allObjects[c];
+			createObject(c);
+		}
+	}
+
 	return "";
 }
 
@@ -289,12 +312,8 @@ bool Game::collide(Geometry playerGeo)
 
 void Game::restart()
 {
-	vec2 oPos = player->getOrigPos();
-	for (int c = 0; c < 4; c++)
-	{
-		player->moveX(oPos.x, c);
-		player->moveY(oPos.y, c);
-	}
+	delete player;
+	createPlayer();
 }
 
 void Game::loadMap()
@@ -311,15 +330,7 @@ void Game::loadMap()
 		ss = istringstream(line);
 		ss >> token;
 
-		if (token == "radius")
-		{
-			token = "";
-			ss >> token;
-			float r = atof(token.c_str());
-			render->setRadius(r);
-		}
-
-		else if (token == "fog")
+		if (token == "fog")
 		{
 			token = "";
 			ss >> token;
