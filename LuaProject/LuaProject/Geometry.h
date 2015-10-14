@@ -13,7 +13,9 @@ private:
 	float myWidth = -1;
 	float myHeight = -1;
 
-	bool BoxOnBoxColl(glm::vec2 aPos1, glm::vec2 aPos2, float aWidth1, float aWidth2, float aHeight1, float aHeight2);
+	float myAngle = 0;
+
+	bool BoxOnBoxColl(glm::vec2 aPos1, glm::vec2 aPos2, float aWidth1, float aWidth2, float aHeight1, float aHeight2, float aAngle1, float aAngle2);
 	bool SphereOnSphereColl(glm::vec2 aPos1, glm::vec2 aPos2, float aRadius1, float aRadius2);
 	bool BoxOnSphereColl(glm::vec2 aBoxPos, glm::vec2 aSpherePos, float aWidth, float aHeight, float aRadius);
 public:
@@ -33,5 +35,6 @@ public:
 	bool setRadius(float aRadius);
 	bool setWidth(float aWidth);
 	bool setHeight(float aHeight);
+	bool setAngle(float angle);
 };
 #endif

@@ -295,7 +295,9 @@ string Game::update()
 			createObject(c);
 		}
 	}
-
+	playerCentX = (tempCorners[0].x + tempCorners[1].x + tempCorners[2].x + tempCorners[3].x) / 4.0;
+	playerCentY = (tempCorners[0].y + tempCorners[1].y + tempCorners[2].y + tempCorners[3].y) / 4.0;
+	player->updateGeoInfo(playerCentY, playerCentX);
 	return "";
 }
 
