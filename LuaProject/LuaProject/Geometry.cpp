@@ -73,10 +73,9 @@ bool Geometry::checkCollision(Geometry aGeom)
 		{
 			return BoxOnSphereColl(myPos, aGeom.myPos, myWidth, myHeight, aGeom.myRadius);
 		}
-
-		//if we get to this point, one of both are illegal
-		return 0;
 	}
+	//if we get to this point, one of both are illegal
+	return 0;
 
 }
 
@@ -84,17 +83,30 @@ bool Geometry::checkCollision(Geometry aGeom)
 
 bool Geometry::BoxOnBoxColl(glm::vec2 aPos1, glm::vec2 aPos2, float aWidth1, float aWidth2, float aHeight1, float aHeight2)
 {
-	return 1;
+
+	return 0;
 }
 
 bool Geometry::SphereOnSphereColl(glm::vec2 aPos1, glm::vec2 aPos2, float aRadius1, float aRadius2)
 {
-	return 1;
+	float dx = aPos1.x - aPos2.x;
+	float dy = aPos1.y - aPos2.y;
+
+	//gets absolute value
+	float distance = sqrt((dx * dx) + (dy * dy));
+
+	//collision
+	if (distance < aRadius1 + aRadius2)
+	{
+		return 1;
+	}
+
+	return 0;
 }
 
 bool Geometry::BoxOnSphereColl(glm::vec2 aBoxPos, glm::vec2 aSpherePos, float aWidth, float aHeight, float aRadius)
 {
-	return 1;
+	return 0;
 }
 
 #pragma endregion
