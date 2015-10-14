@@ -1,6 +1,8 @@
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
+#include "GameObject.h"
+
 class Physics
 {
 private:
@@ -8,6 +10,8 @@ private:
 	Physics();
 public:
 	static Physics* getPhysics();
+
+	void gravity(GameObject* obj);
 };
 
 #endif

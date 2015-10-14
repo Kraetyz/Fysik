@@ -17,7 +17,7 @@ Renderer::~Renderer()
 void Renderer::Render(Button* toRender)
 {
 	vec2 corners[4];
-	toRender->getCorners(corners);
+	toRender->getUV(corners);
 
 	GLuint buf;
 	glGenBuffers(1, &buf);
@@ -49,7 +49,7 @@ void Renderer::Render(GameObject* toRender)
 	GLuint prog = shader->getProgram();
 
 	vec2 corners[4];
-	toRender->getCorners(corners);
+	toRender->getUV(corners);
 
 	GLuint buf;
 	glGenBuffers(1, &buf);

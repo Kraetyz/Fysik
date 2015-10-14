@@ -2,39 +2,41 @@
 
 void GameObject::setPos(vec2 pos)
 {
-	corners[NW] = vec2(pos.x - 0.01, pos.y + 0.01);
-	corners[NE] = vec2(pos.x + 0.01, pos.y + 0.01);
-	corners[SW] = vec2(pos.x - 0.01, pos.y - 0.01);
-	corners[SE] = vec2(pos.x + 0.01, pos.y - 0.01);
+	gInfo.setPos(pos);
+	UV[NW] = vec2(pos.x - sizeX*0.032, pos.y - sizeY*0.032);
+	UV[NE] = vec2(pos.x + sizeX*0.032, pos.y - sizeY*0.032);
+	UV[SW] = vec2(pos.x - sizeX*0.032, pos.y + sizeY*0.032);
+	UV[SE] = vec2(pos.x + sizeX*0.032, pos.y + sizeY*0.032);
 }
 
 GameObject::GameObject()
 {
 }
 
-GameObject::GameObject(vec2 pos, string texName, float sizeX, float sizeY)
+GameObject::GameObject(vec2 pos, string texName, float sX, float sY)
 {
-	float ratio = 1280.0f / 768.0f;
 	origPos = pos;
 	pos.x = pos.x*0.064;
-	pos.y = pos.y*0.064*ratio;
-	corners[NW] = vec2(pos.x - sizeX*0.032, pos.y - sizeY*0.032*ratio);
-	corners[NE] = vec2(pos.x + sizeX*0.032, pos.y - sizeY*0.032*ratio);
-	corners[SW] = vec2(pos.x - sizeX*0.032, pos.y + sizeY*0.032*ratio);
-	corners[SE] = vec2(pos.x + sizeX*0.032, pos.y + sizeY*0.032*ratio);
+	pos.y = pos.y*0.064;
+	sizeX = sX;
+	sizeY = sY;
+	UV[NW] = vec2(pos.x - sizeX*0.032, pos.y - sizeY*0.032);
+	UV[NE] = vec2(pos.x + sizeX*0.032, pos.y - sizeY*0.032);
+	UV[SW] = vec2(pos.x - sizeX*0.032, pos.y + sizeY*0.032);
+	UV[SE] = vec2(pos.x + sizeX*0.032, pos.y + sizeY*0.032);
 
 	//loadBMP(texName);
 	loadBMP("ball.bmp");
 
-	gInfo = Geometry(pos, 0.032);
+	gInfo = Geometry(pos, sizeX*0.032);
 }
 
-void GameObject::getCorners(vec2 toFill[])
+void GameObject::getUV(vec2 toFill[])
 {
-	toFill[NW] = corners[NW];
-	toFill[NE] = corners[NE];
-	toFill[SW] = corners[SW];
-	toFill[SE] = corners[SE];
+	toFill[NW] = UV[NW];
+	toFill[NE] = UV[NE];
+	toFill[SW] = UV[SW];
+	toFill[SE] = UV[SE];
 }
 
 vec2 GameObject::getOrigPos()
@@ -42,21 +44,22 @@ vec2 GameObject::getOrigPos()
 	return origPos;
 }
 
-void GameObject::moveX(float newX, int index)
+void GameObject::updateUV(float dx, float dy)
 {
-	corners[index].x = newX;
-	//gInfo.setPos(vec2(newX, gInfo.getPos().y));
+	for (int c = 0; c < 4; c++)
+	{
+		UV[c].x += dx;
+		UV[c].y += dy;
+	}
 }
 
-void GameObject::moveY(float newY, int index)
+void GameObject::move(float dx, float dy)
 {
-	corners[index].y = newY;
-	//gInfo.setPos(vec2(gInfo.getPos().x, newY));
-}
-
-void GameObject::updateGeoInfo(float x, float y)
-{
-	gInfo.setPos(vec2(x, y));
+	updateUV(dx, dy);
+	vec2 newpos = gInfo.getPos();
+	newpos.x += dx;
+	newpos.y += dy;
+	gInfo.setPos(newpos);
 }
 
 void GameObject::emptyTexture()

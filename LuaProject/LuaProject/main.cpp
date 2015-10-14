@@ -37,7 +37,7 @@ HGLRC CreateOpenGLContext(HWND wndHandle);
 
 void SetViewport()
 {
-	glViewport(0, 0, 1280, 768);
+	glViewport(0, 0, 600, 600);
 }
 
 void setupButtons()
@@ -105,8 +105,8 @@ void clickUpdate()
 	lua_getglobal(buttonState, "nrOfButtons");
 	int buttonNr = lua_tointeger(buttonState, -1);
 	lua_pop(buttonState, 1);
-	float mouseX = ((pCur.x - (1280 / 2)) / 640.0f)*15;
-	float mouseY = (-(pCur.y - (768 / 2)) / 366.0f)*9;
+	float mouseX = ((pCur.x - (600 / 2)) / 300.0f)*15;
+	float mouseY = (-(pCur.y - (600 / 2)) / 300.0f)*9;
 	lua_pushnumber(buttonState, mouseX);
 	lua_pushnumber(buttonState, mouseY);
 	if (lua_pcall(buttonState, 2, 1, 0))
@@ -127,14 +127,6 @@ void Update()
 {
 	Sleep(1000 / 60);
 	string msg = state->update();
-	if (msg == "GOOOOOAAAAAAL")
-	{
-		delete state;
-		state = new Menu();
-		if (luaL_loadfile(buttonState, "menuButtons.txt") || lua_pcall(buttonState, 0, 0, 0))
-			throw;
-		setupButtons();
-	}
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	buttonRender();
@@ -245,7 +237,7 @@ HWND InitWindow(HINSTANCE hInstance)
 	if (!RegisterClassEx(&wcex))
 		return false;
 
-	RECT rc = { 0, 0, 1280, 768 };
+	RECT rc = { 0, 0, 600, 600 };
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
 	HWND handle = CreateWindow(
