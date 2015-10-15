@@ -96,6 +96,7 @@ string Game::update()
 
 	if (collide(player->getGeoInfo()))
 	{
+		throw;
 		player->setPos(pPlayer);
 		p->collide(player, player);
 	}

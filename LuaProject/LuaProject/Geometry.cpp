@@ -53,7 +53,7 @@ bool Geometry::checkCollision(Geometry aGeom)
 			//aGeom is a box
 			if (aGeom.myHeight != -1 && aGeom.myWidth != -1)
 			{
-				return BoxOnSphereColl(aGeom.myPos, myPos, aGeom.myWidth, aGeom.myHeight, myRadius);
+				return BoxOnSphereColl(aGeom.myPos, myPos, aGeom.myWidth, aGeom.myHeight, myRadius, aGeom.myAngle);
 			}
 		}
 
@@ -71,7 +71,7 @@ bool Geometry::checkCollision(Geometry aGeom)
 		//this is a box
 		else if (myWidth > 0 && myHeight > 0)
 		{
-			return BoxOnSphereColl(myPos, aGeom.myPos, myWidth, myHeight, aGeom.myRadius);
+			return BoxOnSphereColl(myPos, aGeom.myPos, myWidth, myHeight, aGeom.myRadius, myAngle);
 		}
 	}
 	//if we get to this point, one of both are illegal
@@ -160,7 +160,7 @@ bool Geometry::BoxOnBoxColl(glm::vec2 aPos1, glm::vec2 aPos2, float aWidth1, flo
 			float projY = projAxis * axis[a].y;
 			float projX = projAxis * axis[a].x;
 
-			float toScalar = projX * axis[a].x + projY * axis[a].y;
+			float toScalar = projX + projY; // projX * axis[a].x + projY * axis[a].y;
 			if (toScalar >= maxA)
 				maxA = toScalar;
 			else if (toScalar <= minA)
@@ -178,7 +178,7 @@ bool Geometry::BoxOnBoxColl(glm::vec2 aPos1, glm::vec2 aPos2, float aWidth1, flo
 			float projY = projAxis * axis[a].y;
 			float projX = projAxis * axis[a].x;
 
-			float toScalar = projX * axis[a].x + projY * axis[a].y;
+			float toScalar = projX + projY; // projX * axis[a].x + projY * axis[a].y;
 			if (toScalar >= maxB)
 				maxB = toScalar;
 			else if (toScalar <= minB)
@@ -212,9 +212,61 @@ bool Geometry::SphereOnSphereColl(glm::vec2 aPos1, glm::vec2 aPos2, float aRadiu
 	return 0;
 }
 
-bool Geometry::BoxOnSphereColl(glm::vec2 aBoxPos, glm::vec2 aSpherePos, float aWidth, float aHeight, float aRadius)
+bool Geometry::BoxOnSphereColl(glm::vec2 aBoxPos, glm::vec2 aSpherePos, float aWidth, float aHeight, float aRadius, float aBoxAngle)
 {
-	return 0;
+	glm::vec2 boxCorners[4];
+
+	boxCorners[0] = glm::vec2(-aWidth / 2, -aHeight / 2);
+	boxCorners[1] = glm::vec2(-aWidth / 2, aHeight / 2);
+	boxCorners[2] = glm::vec2(aWidth / 2, -aHeight / 2);
+	boxCorners[3] = glm::vec2(aWidth / 2, aHeight / 2);
+
+	glm::vec2 circleToRectSpace = aSpherePos;
+	/*
+	box2Corners[i].x = tempX * glm::cos(aAngle2) - tempY * glm::sin(aAngle2);
+	box2Corners[i].y = tempX * glm::sin(aAngle2) + tempY * glm::cos(aAngle2);*/
+
+	circleToRectSpace -= aBoxPos;
+
+	float tempX = circleToRectSpace.x;
+	float tempY = circleToRectSpace.y;
+	circleToRectSpace.x = tempX * glm::cos(aBoxAngle) - tempY * glm::sin(aBoxAngle);
+	circleToRectSpace.y = tempX * glm::sin(aBoxAngle) + tempY * glm::cos(aBoxAngle);
+
+	//Now we just calculate AABB vs Circle using circleToRectSpace
+
+	/*bool intersects(CircleType circle, RectType rect)
+
+{
+    circleDistance.x = abs(circle.x - rect.x);
+    circleDistance.y = abs(circle.y - rect.y);
+
+    if (circleDistance.x > (rect.width/2 + circle.r)) { return false; }
+    if (circleDistance.y > (rect.height/2 + circle.r)) { return false; }
+
+    if (circleDistance.x <= (rect.width/2)) { return true; } 
+    if (circleDistance.y <= (rect.height/2)) { return true; }
+
+    cornerDistance_sq = (circleDistance.x - rect.width/2)^2 +
+                         (circleDistance.y - rect.height/2)^2;
+
+    return (cornerDistance_sq <= (circle.r^2));
+}*/
+
+	if (circleToRectSpace.x > (aWidth / 2 + aRadius))
+		return 0;
+	if (circleToRectSpace.y > (aHeight/2 + aRadius))
+		return 0;
+
+	if (circleToRectSpace.x <= (aWidth / 2))
+		return 1;
+	if (circleToRectSpace.y <= (aHeight / 2))
+		return 1;
+
+	float cornerDistSq = ((circleToRectSpace.x - aWidth / 2) * (circleToRectSpace.x - aWidth / 2))
+		+ ((circleToRectSpace.y - aHeight / 2) * (circleToRectSpace.y - aHeight / 2));
+
+	return (cornerDistSq <= (aRadius * aRadius));
 }
 
 #pragma endregion
