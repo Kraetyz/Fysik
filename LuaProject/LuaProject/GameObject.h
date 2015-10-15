@@ -16,6 +16,13 @@
 using namespace glm;
 using namespace std;
 
+struct ForceInfo
+{
+	vec2 acceleration;
+	vec2 velocity;
+	float mass;
+};
+
 class GameObject
 {
 private:
@@ -27,8 +34,13 @@ private:
 	GLuint tex;
 
 	Geometry gInfo;
+	/*vec2 velocity;
+	vec2 acceleration;
+	float mass;*/
+	ForceInfo fInfo;
 
 	void updateUV(float dx, float dy);
+	void move(float dx, float dy);
 protected:
 	void emptyTexture();
 	bool loadBMP(string name);
@@ -38,9 +50,14 @@ public:
 	void getUV(vec2 toFill[]);
 	GLuint getText();
 	vec2 getOrigPos();
-	void move(float dx, float dy);
 	void setPos(vec2 pos);
 	Geometry getGeoInfo(){return gInfo;}
+
+	void applyForce(vec2 F);
+	void update();
+
+	ForceInfo getForceInfo(){return fInfo;}
+	void setForceInfo(ForceInfo fI);
 };
 
 #endif
