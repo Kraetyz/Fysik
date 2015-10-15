@@ -29,6 +29,9 @@ GameObject::GameObject(vec2 pos, string texName, float sX, float sY)
 	loadBMP("ball.bmp");
 
 	gInfo = Geometry(pos, sizeX*0.032);
+	fInfo.velocity = vec2(0,0);
+	fInfo.acceleration = vec2(0,0);
+	fInfo.mass = 50.0f;
 }
 
 void GameObject::getUV(vec2 toFill[])
@@ -134,4 +137,22 @@ bool GameObject::loadBMP(std::string imagepath)
 GLuint GameObject::getText()
 {
 	return tex;
+}
+
+void GameObject::applyForce(vec2 F)
+{
+	vec2 a = F / fInfo.mass;
+	fInfo.acceleration += a;
+}
+
+void GameObject::update()
+{
+	fInfo.velocity += fInfo.acceleration;
+	move(fInfo.velocity.x, fInfo.velocity.y);
+}
+
+void GameObject::setForceInfo(ForceInfo fI)
+{
+	fInfo.acceleration = fI.acceleration;
+	fInfo.velocity = fI.velocity;
 }
