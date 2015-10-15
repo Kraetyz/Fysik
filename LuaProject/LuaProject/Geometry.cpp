@@ -222,6 +222,9 @@ bool Geometry::BoxOnSphereColl(glm::vec2 aBoxPos, glm::vec2 aSpherePos, float aW
 	circleToRectSpace.x -= aBoxPos.x;
 	circleToRectSpace.y -= aBoxPos.y;
 
+	circleToRectSpace.x = abs(circleToRectSpace.x);
+	circleToRectSpace.y = abs(circleToRectSpace.y);
+
 	float tempX = circleToRectSpace.x;
 	float tempY = circleToRectSpace.y;
 	circleToRectSpace.x = tempX * glm::cos(aBoxAngle) - tempY * glm::sin(aBoxAngle);
