@@ -28,7 +28,7 @@ GameObject::GameObject(vec2 pos, string texName, float sX, float sY)
 	//loadBMP(texName);
 	loadBMP("ball.bmp");
 
-	gInfo = Geometry(pos, sizeX*0.032);
+	gInfo = Geometry(pos, sizeX*0.032, sizeX * 0.032);
 }
 
 void GameObject::getUV(vec2 toFill[])

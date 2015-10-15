@@ -87,15 +87,15 @@ bool Geometry::BoxOnBoxColl(glm::vec2 aPos1, glm::vec2 aPos2, float aWidth1, flo
 	glm::vec2 box1Corners[4];
 	glm::vec2 box2Corners[4];
 
-	box1Corners[0] = glm::vec2(-aWidth1, -aHeight1);
-	box1Corners[1] = glm::vec2(-aWidth1, aHeight1);
-	box1Corners[2] = glm::vec2(aWidth1, -aHeight1);
-	box1Corners[3] = glm::vec2(aWidth1, aHeight1);
+	box1Corners[0] = glm::vec2(-aWidth1 / 2, -aHeight1 / 2);
+	box1Corners[1] = glm::vec2(-aWidth1 / 2, aHeight1 / 2);
+	box1Corners[2] = glm::vec2(aWidth1 / 2, -aHeight1 / 2);
+	box1Corners[3] = glm::vec2(aWidth1 / 2, aHeight1 / 2);
 
-	box2Corners[0] = glm::vec2(-aWidth2, -aHeight2);
-	box2Corners[1] = glm::vec2(-aWidth2, aHeight2);
-	box2Corners[2] = glm::vec2(aWidth2, -aHeight2);
-	box2Corners[3] = glm::vec2(aWidth2, aHeight2);
+	box2Corners[0] = glm::vec2(-aWidth2 / 2, -aHeight2 / 2);
+	box2Corners[1] = glm::vec2(-aWidth2 / 2, aHeight2 / 2);
+	box2Corners[2] = glm::vec2(aWidth2 / 2, -aHeight2 / 2);
+	box2Corners[3] = glm::vec2(aWidth2 / 2, aHeight2 / 2);
 
 	/*
 	CORNER INFO:
@@ -132,28 +132,65 @@ bool Geometry::BoxOnBoxColl(glm::vec2 aPos1, glm::vec2 aPos2, float aWidth1, flo
 	axis[3] = glm::vec2(box2Corners[0].x - box2Corners[2].x, box2Corners[0].y - box2Corners[2].y);
 
 
+	/*
+	CORNER INFO:
+	0 = UL
+	1 = LL
+	2 = UR
+	3 = LR
+	*/
+
+	float minA = FLT_MAX, minB = FLT_MAX, maxA = -FLT_MAX, maxB = -FLT_MAX;
 
 	for (int a = 0; a < 4; a++)
 	{
 		//a is for axii
+		//resets the max/min for the next axis
+		minA = minB = FLT_MAX;
+		maxA = maxB = -FLT_MAX;
 
 		for (int r1 = 0; r1 < 4; r1++)
 		{
 			//c1 = corners for rect 1
 			//calcs max and min on projected axis
+
+			float projAxis = box1Corners[r1].x * axis[a].x + box1Corners[r1].y * axis[a].y;
+			projAxis = projAxis / (axis[a].x * axis[a].x + axis[a].y * axis[a].y);
+
+			float projY = projAxis * axis[a].y;
+			float projX = projAxis * axis[a].x;
+
+			float toScalar = projX * axis[a].x + projY * axis[a].y;
+			if (toScalar >= maxA)
+				maxA = toScalar;
+			else if (toScalar <= minA)
+				minA = toScalar;
 		}
 
 		for (int r2 = 0; r2 < 4; r2++)
 		{
 			//c1 = corners for rect 1
 			//calcs max and min on projected axis
+
+			float projAxis = box2Corners[r2].x * axis[a].x + box2Corners[r2].y * axis[a].y;
+			projAxis = projAxis / (axis[a].x * axis[a].x + axis[a].y * axis[a].y);
+
+			float projY = projAxis * axis[a].y;
+			float projX = projAxis * axis[a].x;
+
+			float toScalar = projX * axis[a].x + projY * axis[a].y;
+			if (toScalar >= maxB)
+				maxB = toScalar;
+			else if (toScalar <= minB)
+				minB = toScalar;
 		}
 
-		//if minB <= maxA && maxB >= minA we have collisison on axis, continue
-		//else return false
+		//This check will return 0 if the collision doesn't happen
+		if (minB > maxA && maxB < minA)
+			return 0;
 	}
 
-	
+
 
 	return 1;
 }
@@ -219,7 +256,7 @@ bool Geometry::setRadius(float aRadius)
 		myRadius = aRadius;
 		return 1;
 	}
-	
+
 	return 0;
 }
 
