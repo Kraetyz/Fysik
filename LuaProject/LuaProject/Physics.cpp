@@ -13,6 +13,12 @@ Physics* Physics::getPhysics()
 	return singleton;
 }
 
+void Physics::release()
+{
+	if (singleton)
+		delete singleton;
+}
+
 void Physics::gravity(GameObject* obj)
 {
 	obj->applyForce(vec2(0, -0.00001));
@@ -20,8 +26,42 @@ void Physics::gravity(GameObject* obj)
 
 void Physics::collide(GameObject* obj1, GameObject* obj2)
 {
-	ForceInfo obj1Info = obj1->getForceInfo();
+	/*ForceInfo obj1Info = obj1->getForceInfo();
 	obj1Info.velocity = vec2(0, 0);
 	obj1Info.acceleration = vec2(0, 0);
-	obj1->setForceInfo(obj1Info);
+	obj1->setForceInfo(obj1Info);*/
+	Geometry oG1 = obj1->getGeoInfo();
+	Geometry oG2 = obj2->getGeoInfo();
+	ForceInfo oI1 = obj1->getForceInfo();
+	ForceInfo oI2 = obj2->getForceInfo();
+	oI2.mass = 2.0;
+
+	//http://www.vobarian.com/collisions/2dcollisions2.pdf
+	vec2 oPos1 = oG1.getPos();
+	vec2 oPos2 = oG2.getPos();
+	vec2 normal = vec2(oPos2.x - oPos1.x, oPos2.y - oPos1.y);
+	vec2 unitVec = normal / (sqrt(normal.x*normal.x + normal.y*normal.y));
+	vec2 tangent = vec2(-unitVec.y, unitVec.x);
+
+	float v1normal = dot(unitVec, oI1.velocity);
+	float v2normal = dot(unitVec, oI2.velocity);
+	float v1tangent = dot(tangent, oI1.velocity);
+	float v2tangent = dot(tangent, oI2.velocity);
+
+	float v1normalNew = (v1normal*(oI1.mass - oI2.mass) + 2 * oI2.mass*v2normal) / (oI1.mass + oI2.mass);
+	float v2normalNew = (v1normal*(oI2.mass - oI1.mass) + 2 * oI1.mass*v1normal) / (oI1.mass + oI2.mass);
+
+	vec2 v1n = unitVec*v1normalNew;
+	vec2 v2n = unitVec*v2normalNew;
+	vec2 v1t = unitVec*v1tangent;
+	vec2 v2t = unitVec*v2tangent;
+
+	vec2 v1new = v1n + v1t;
+	vec2 v2new = v2n + v2t;
+
+	oI1.velocity = -v1new;
+	oI2.velocity = v2new;
+
+	obj1->setForceInfo(oI1);
+	obj2->setForceInfo(oI2);
 }

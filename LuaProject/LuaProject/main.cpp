@@ -106,7 +106,7 @@ void clickUpdate()
 	int buttonNr = lua_tointeger(buttonState, -1);
 	lua_pop(buttonState, 1);
 	float mouseX = ((pCur.x - (600 / 2)) / 300.0f)*15;
-	float mouseY = (-(pCur.y - (600 / 2)) / 300.0f)*9;
+	float mouseY = (-(pCur.y - (600 / 2)) / 300.0f)*15;
 	lua_pushnumber(buttonState, mouseX);
 	lua_pushnumber(buttonState, mouseY);
 	if (lua_pcall(buttonState, 2, 1, 0))

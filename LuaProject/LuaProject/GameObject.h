@@ -34,9 +34,6 @@ private:
 	GLuint tex;
 
 	Geometry gInfo;
-	/*vec2 velocity;
-	vec2 acceleration;
-	float mass;*/
 	ForceInfo fInfo;
 
 	void updateUV(float dx, float dy);

@@ -36,7 +36,7 @@ Game::~Game()
 	}
 	delete[]allObjects;
 
-	
+	Physics::release();
 
 	lua_close(L);
 }
@@ -94,23 +94,25 @@ string Game::update()
 
 	player->update();
 
-	if (collide(player->getGeoInfo()))
-	{
-		player->setPos(pPlayer);
-		p->collide(player, player);
-	}
+	collide(player);
+
 	return "";
 }
 
-bool Game::collide(Geometry playerGeo)
+void Game::collide(GameObject* player)
 {
+	Geometry playerGeo = player->getGeoInfo();
 	bool hit = false;
 	for (int c = 0; c < nrOfObjects && !hit; c++)
 	{
 		Geometry g = allObjects[c]->getGeoInfo();
 		hit = playerGeo.checkCollision(g);
+		if (hit)
+		{
+			Physics* p = Physics::getPhysics();
+			p->collide(player, allObjects[c]);
+		}
 	}
-	return hit;
 }
 
 void Game::restart()

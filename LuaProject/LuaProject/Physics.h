@@ -14,6 +14,8 @@ public:
 	void gravity(GameObject* obj);
 
 	void collide(GameObject* obj1, GameObject* obj2);
+
+	static void release();
 };
 
 #endif
