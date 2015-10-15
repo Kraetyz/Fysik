@@ -213,19 +213,14 @@ bool Geometry::SphereOnSphereColl(glm::vec2 aPos1, glm::vec2 aPos2, float aRadiu
 
 bool Geometry::BoxOnSphereColl(glm::vec2 aBoxPos, glm::vec2 aSpherePos, float aWidth, float aHeight, float aRadius, float aBoxAngle)
 {
-	glm::vec2 boxCorners[4];
-
-	boxCorners[0] = glm::vec2(-aWidth / 2, -aHeight / 2);
-	boxCorners[1] = glm::vec2(-aWidth / 2, aHeight / 2);
-	boxCorners[2] = glm::vec2(aWidth / 2, -aHeight / 2);
-	boxCorners[3] = glm::vec2(aWidth / 2, aHeight / 2);
-
+	
 	glm::vec2 circleToRectSpace = aSpherePos;
 	/*
 	box2Corners[i].x = tempX * glm::cos(aAngle2) - tempY * glm::sin(aAngle2);
 	box2Corners[i].y = tempX * glm::sin(aAngle2) + tempY * glm::cos(aAngle2);*/
 
-	circleToRectSpace -= aBoxPos;
+	circleToRectSpace.x -= aBoxPos.x;
+	circleToRectSpace.y -= aBoxPos.y;
 
 	float tempX = circleToRectSpace.x;
 	float tempY = circleToRectSpace.y;
@@ -237,24 +232,24 @@ bool Geometry::BoxOnSphereColl(glm::vec2 aBoxPos, glm::vec2 aSpherePos, float aW
 	/*bool intersects(CircleType circle, RectType rect)
 
 {
-    circleDistance.x = abs(circle.x - rect.x);
-    circleDistance.y = abs(circle.y - rect.y);
+circleDistance.x = abs(circle.x - rect.x);
+circleDistance.y = abs(circle.y - rect.y);
 
-    if (circleDistance.x > (rect.width/2 + circle.r)) { return false; }
-    if (circleDistance.y > (rect.height/2 + circle.r)) { return false; }
+if (circleDistance.x > (rect.width/2 + circle.r)) { return false; }
+if (circleDistance.y > (rect.height/2 + circle.r)) { return false; }
 
-    if (circleDistance.x <= (rect.width/2)) { return true; } 
-    if (circleDistance.y <= (rect.height/2)) { return true; }
+if (circleDistance.x <= (rect.width/2)) { return true; }
+if (circleDistance.y <= (rect.height/2)) { return true; }
 
-    cornerDistance_sq = (circleDistance.x - rect.width/2)^2 +
-                         (circleDistance.y - rect.height/2)^2;
+cornerDistance_sq = (circleDistance.x - rect.width/2)^2 +
+(circleDistance.y - rect.height/2)^2;
 
-    return (cornerDistance_sq <= (circle.r^2));
+return (cornerDistance_sq <= (circle.r^2));
 }*/
 
 	if (circleToRectSpace.x > (aWidth / 2 + aRadius))
 		return 0;
-	if (circleToRectSpace.y > (aHeight/2 + aRadius))
+	if (circleToRectSpace.y > (aHeight / 2 + aRadius))
 		return 0;
 
 	if (circleToRectSpace.x <= (aWidth / 2))
