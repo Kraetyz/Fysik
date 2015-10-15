@@ -34,7 +34,6 @@ void Physics::collide(GameObject* obj1, GameObject* obj2)
 	Geometry oG2 = obj2->getGeoInfo();
 	ForceInfo oI1 = obj1->getForceInfo();
 	ForceInfo oI2 = obj2->getForceInfo();
-	oI2.mass = 2.0;
 
 	//http://www.vobarian.com/collisions/2dcollisions2.pdf
 	vec2 oPos1 = oG1.getPos();

@@ -83,6 +83,7 @@ bool Geometry::checkCollision(Geometry aGeom)
 
 bool Geometry::BoxOnBoxColl(glm::vec2 aPos1, glm::vec2 aPos2, float aWidth1, float aWidth2, float aHeight1, float aHeight2, float aAngle1, float aAngle2)
 {
+	return 0;
 	//we start by getting the corner positiions of our boxes
 	glm::vec2 box1Corners[4];
 	glm::vec2 box2Corners[4];
@@ -189,8 +190,6 @@ bool Geometry::BoxOnBoxColl(glm::vec2 aPos1, glm::vec2 aPos2, float aWidth1, flo
 		if (minB > maxA && maxB < minA)
 			return 0;
 	}
-
-
 
 	return 1;
 }

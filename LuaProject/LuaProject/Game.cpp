@@ -158,7 +158,7 @@ void Game::loadMap()
 			float pY = atof(token.c_str());
 			if (player)
 				delete player;
-			player = new GameObject(vec2(pX, pY), "ball.bmp", 0.8, 0.8);
+			player = new GameObject(vec2(pX, pY), "ball.bmp", 0.8, 0.8, "circle");
 		}
 
 		else if (token == "nrOfObjects")
@@ -199,7 +199,7 @@ void Game::loadMap()
 				if (walls < nrOfObjects)
 				{
 					clr.append(".bmp");
-					allObjects[walls] = new GameObject(vec2(wX, wY), clr, 1.0, 1.0);
+					allObjects[walls] = new GameObject(vec2(wX, wY), clr, 1.0, 1.0, "rectangle");
 					walls++;
 				}
 			}

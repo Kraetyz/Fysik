@@ -13,7 +13,7 @@ GameObject::GameObject()
 {
 }
 
-GameObject::GameObject(vec2 pos, string texName, float sX, float sY)
+GameObject::GameObject(vec2 pos, string texName, float sX, float sY, string type)
 {
 	origPos = pos;
 	pos.x = pos.x*0.064;
@@ -26,9 +26,12 @@ GameObject::GameObject(vec2 pos, string texName, float sX, float sY)
 	UV[SE] = vec2(pos.x + sizeX*0.032, pos.y + sizeY*0.032);
 
 	//loadBMP(texName);
-	loadBMP("ball.bmp");
+	loadBMP(texName);
 
-	gInfo = Geometry(pos, sizeX*0.032);
+	if (type == "circle")
+		gInfo = Geometry(pos, sizeX*0.032);
+	if (type == "rectangle")
+		gInfo = Geometry(pos, sizeX*0.032, sizeY*0.032);
 	fInfo.velocity = vec2(0,0);
 	fInfo.acceleration = vec2(0,0);
 	fInfo.mass = 50.0f;

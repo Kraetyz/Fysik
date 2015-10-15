@@ -43,7 +43,7 @@ protected:
 	bool loadBMP(string name);
 public:
 	GameObject();
-	GameObject(vec2 pos, string texName, float sizeX, float sizeY);
+	GameObject(vec2 pos, string texName, float sizeX, float sizeY, string type);
 	void getUV(vec2 toFill[]);
 	GLuint getText();
 	vec2 getOrigPos();
