@@ -39,11 +39,11 @@ private:
 	std::vector<vec2> forces;
 
 	void updateUV(float dx, float dy);
-	void move(float dx, float dy);
 protected:
 	void emptyTexture();
 	bool loadBMP(string name);
 public:
+	void move(float dx, float dy);
 	GameObject();
 	GameObject(vec2 pos, string texName, float sizeX, float sizeY, string type);
 	void getUV(vec2 toFill[]);

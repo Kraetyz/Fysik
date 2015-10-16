@@ -88,7 +88,7 @@ string Game::update()
 
 	if (collide(player))
 	{
-		player->setPos(pPlayer);
+		//player->setPos(pPlayer);
 	}
 
 	player->update();
