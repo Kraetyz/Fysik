@@ -30,6 +30,7 @@ public:
 	float getRadius();
 	float getWidth();
 	float getHeight();
+	float getAngle();
 
 	bool setPos(glm::vec2 aPos);
 	bool setRadius(float aRadius);

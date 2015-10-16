@@ -34,7 +34,13 @@ GameObject::GameObject(vec2 pos, string texName, float sX, float sY, string type
 		gInfo = Geometry(pos, sizeX*0.064, sizeY*0.064);
 	fInfo.velocity = vec2(0,0);
 	fInfo.acceleration = vec2(0,0);
-	fInfo.mass = 50.0f;
+	fInfo.mass = 50.0f; //SAMMA SOM MINFO MASSAN PLS ÄNDRA BÄGGE
+
+	mInfo.acceleration = 0;
+	mInfo.velocity = 0;
+	mInfo.mass = 50.0f; //SAMMA SOM FINFO MASSAN PLS ÄNDRA BÄGGE
+
+	setInertia();
 }
 
 void GameObject::getUV(vec2 toFill[])
@@ -50,12 +56,49 @@ vec2 GameObject::getOrigPos()
 	return origPos;
 }
 
+void GameObject::setInertia()
+{
+	float width = gInfo.getWidth();
+	float height = gInfo.getHeight();
+	float rad = gInfo.getRadius();
+
+
+	float inertia = 0;
+	if (rad == -1 && width > 0 && height > 0)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			inertia = (mInfo.mass / 4) * (((height / 2) * (height / 2)) + ((width / 2) * width / 2));
+		}
+	}
+
+	else if (rad > 0 && width == -1 && height == -1)
+	{
+		inertia = mInfo.mass * rad * rad;
+	}
+
+	mInfo.inertia = inertia;
+}
+
 void GameObject::updateUV(float dx, float dy)
 {
 	for (int c = 0; c < 4; c++)
 	{
 		UV[c].x += dx;
 		UV[c].y += dy;
+	}
+}
+
+void GameObject::updateUV(float angle)
+{
+	float tempX = 0, tempY = 0;
+
+	for(int i = 0; i < 4; i++)
+	{
+		tempX = UV[i].x;
+		tempY = UV[i].y;
+		UV[i].x = tempX * glm::cos(angle) - tempY * glm::sin(angle);
+		UV[i].y = tempX * glm::sin(angle) + tempY * glm::cos(angle);
 	}
 }
 
@@ -66,6 +109,12 @@ void GameObject::move(float dx, float dy)
 	newpos.x += dx;
 	newpos.y += dy;
 	gInfo.setPos(newpos);
+}
+
+void GameObject::rotate(float dv)
+{
+	gInfo.setAngle(gInfo.getAngle() + dv);
+	updateUV(gInfo.getAngle());
 }
 
 void GameObject::emptyTexture()
@@ -147,9 +196,14 @@ void GameObject::applyForce(vec2 F)
 	forces.push_back(F);
 }
 
+void GameObject::applyMoment(float M)
+{
+	moments.push_back(M);
+}
+
 void GameObject::update()
 {
-	vec2 resultantF;
+	vec2 resultantF = vec2(0, 0);
 	for (int c = 0; c < forces.size(); c++)
 	{
 		resultantF += forces[c];
@@ -158,6 +212,16 @@ void GameObject::update()
 	fInfo.acceleration = a;
 	fInfo.velocity += fInfo.acceleration;
 	move(fInfo.velocity.x, fInfo.velocity.y);
+
+	float resultantM = 0;
+	for (int i = 0; i < moments.size(); i++)
+	{
+		resultantM += moments[i];
+	}
+	float alpha = resultantM / mInfo.inertia;
+	mInfo.acceleration = alpha;
+	mInfo.velocity += mInfo.acceleration;
+	rotate(mInfo.velocity);
 }
 
 void GameObject::setForceInfo(ForceInfo fI)

@@ -24,6 +24,18 @@ struct ForceInfo
 	float mass;
 };
 
+struct MomentInfo
+{
+	float acceleration;
+	float velocity;
+	float mass;
+	float inertia;
+};
+
+//-----NOTIS----
+//Rotation positiv = uppåt från högra sidan, tänk som enhetscirkeln
+//Rotation negativ = neråt från högra sidan.
+
 class GameObject
 {
 private:
@@ -36,10 +48,17 @@ private:
 
 	Geometry gInfo;
 	ForceInfo fInfo;
+	MomentInfo mInfo;
+
 	std::vector<vec2> forces;
+	std::vector<float> moments;
 
 	void updateUV(float dx, float dy);
+	void updateUV(float angle);
 	void move(float dx, float dy);
+	void rotate(float dv);
+
+	void setInertia();
 protected:
 	void emptyTexture();
 	bool loadBMP(string name);
@@ -53,6 +72,7 @@ public:
 	Geometry getGeoInfo(){return gInfo;}
 
 	void applyForce(vec2 F);
+	void applyMoment(float M);
 	void update();
 
 	ForceInfo getForceInfo(){return fInfo;}

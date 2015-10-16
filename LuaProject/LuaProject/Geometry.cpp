@@ -292,6 +292,11 @@ float Geometry::getHeight()
 	return myHeight;
 }
 
+float Geometry::getAngle()
+{
+	return myAngle;
+}
+
 bool Geometry::setPos(glm::vec2 aPos)
 {
 	myPos = aPos;
