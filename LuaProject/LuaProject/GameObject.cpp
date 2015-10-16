@@ -144,12 +144,18 @@ GLuint GameObject::getText()
 
 void GameObject::applyForce(vec2 F)
 {
-	vec2 a = F / fInfo.mass;
-	fInfo.acceleration = a;
+	forces.push_back(F);
 }
 
 void GameObject::update()
 {
+	vec2 resultantF;
+	for (int c = 0; c < forces.size(); c++)
+	{
+		resultantF += forces[c];
+	}
+	vec2 a = resultantF / fInfo.mass;
+	fInfo.acceleration = a;
 	fInfo.velocity += fInfo.acceleration;
 	move(fInfo.velocity.x, fInfo.velocity.y);
 }

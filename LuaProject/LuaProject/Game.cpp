@@ -71,7 +71,7 @@ string Game::update()
 
 	vec2 pPlayer;
 	pPlayer = player->getGeoInfo().getPos();
-	float pForce = 0.05f;
+	float pForce = 0.005f;
 
 	if (GetKeyState('A') && GetAsyncKeyState('A'))
 		player->applyForce(vec2(-pForce, 0));

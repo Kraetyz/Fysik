@@ -6,6 +6,7 @@
 #include "glm/glm/glm.hpp"
 #include "glm/glm/gtx/transform.hpp"
 #include <string>
+#include <vector>
 #include "Geometry.h"
 
 #define NW 0
@@ -35,6 +36,7 @@ private:
 
 	Geometry gInfo;
 	ForceInfo fInfo;
+	std::vector<vec2> forces;
 
 	void updateUV(float dx, float dy);
 	void move(float dx, float dy);
