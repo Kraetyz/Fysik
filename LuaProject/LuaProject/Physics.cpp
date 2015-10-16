@@ -21,7 +21,7 @@ void Physics::release()
 
 void Physics::gravity(GameObject* obj)
 {
-	obj->applyForce(vec2(0, -0.00001));
+	obj->applyForce(vec2(0, -0.00982));
 }
 
 void Physics::collide(GameObject* obj1, GameObject* obj2)

@@ -31,7 +31,7 @@ GameObject::GameObject(vec2 pos, string texName, float sX, float sY, string type
 	if (type == "circle")
 		gInfo = Geometry(pos, sizeX*0.032);
 	if (type == "rectangle")
-		gInfo = Geometry(pos, sizeX*0.032, sizeY*0.032);
+		gInfo = Geometry(pos, sizeX*0.064, sizeY*0.064);
 	fInfo.velocity = vec2(0,0);
 	fInfo.acceleration = vec2(0,0);
 	fInfo.mass = 50.0f;
@@ -145,7 +145,7 @@ GLuint GameObject::getText()
 void GameObject::applyForce(vec2 F)
 {
 	vec2 a = F / fInfo.mass;
-	fInfo.acceleration += a;
+	fInfo.acceleration = a;
 }
 
 void GameObject::update()

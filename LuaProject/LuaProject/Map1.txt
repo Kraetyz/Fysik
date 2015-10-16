@@ -1,5 +1,5 @@
 fog 0.2 0.2 0.3
-player -1.82813 7.45082
+player 0 7
 nrOfObjects 3
 wall 0 4.0 green
 wall 0 0 yellow

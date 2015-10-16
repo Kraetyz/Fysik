@@ -71,35 +71,32 @@ string Game::update()
 
 	vec2 pPlayer;
 	pPlayer = player->getGeoInfo().getPos();
-	float pForce = 0.00005f;
+	float pForce = 0.05f;
 
 	if (GetKeyState('A') && GetAsyncKeyState('A'))
 		player->applyForce(vec2(-pForce, 0));
-		//player->move(-pSpeed, 0);
 	if (GetKeyState('D') && GetAsyncKeyState('D'))
 		player->applyForce(vec2(pForce, 0));
-		//player->move(pSpeed, 0);
 
 	if (GetKeyState('W') && GetAsyncKeyState('W'))
 		player->applyForce(vec2(0, pForce));
-		//player->move(0, pSpeed);
 	if (GetKeyState('S') && GetAsyncKeyState('S'))
 		player->applyForce(vec2(0, -pForce));
-		//player->move(0, -pSpeed);
-
-	player->update();
 
 	Physics* p = Physics::getPhysics();
 	p->gravity(player);
 
-	player->update();
+	if (collide(player))
+	{
+		player->setPos(pPlayer);
+	}
 
-	collide(player);
+	player->update();
 
 	return "";
 }
 
-void Game::collide(GameObject* player)
+bool Game::collide(GameObject* player)
 {
 	Geometry playerGeo = player->getGeoInfo();
 	bool hit = false;
@@ -113,6 +110,7 @@ void Game::collide(GameObject* player)
 			p->collide(player, allObjects[c]);
 		}
 	}
+	return hit;
 }
 
 void Game::restart()
