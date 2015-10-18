@@ -24,6 +24,11 @@ void Physics::gravity(GameObject* obj)
 	obj->applyForce(vec2(0, -0.00982));
 }
 
+void Physics::rotate(GameObject* obj)
+{
+	obj->applyMoment(0.000001);
+}
+
 void Physics::collide(GameObject* obj1, GameObject* obj2)
 {
 	/*ForceInfo obj1Info = obj1->getForceInfo();
@@ -65,7 +70,7 @@ void Physics::collide(GameObject* obj1, GameObject* obj2)
 
 	oI2.velocity = v2new;
 
-	obj1->setPos(vec2(oPos1.x + oI1.velocity.x, oPos1.y + oI1.velocity.y));
+	obj1->move(oI1.velocity.x, oI1.velocity.y);
 	obj1->setForceInfo(oI1);
 	//obj1->applyForce(F);
 	obj2->setForceInfo(oI2);

@@ -85,6 +85,7 @@ string Game::update()
 
 	Physics* p = Physics::getPhysics();
 	p->gravity(player);
+	p->rotate(player);
 
 	if (collide(player))
 	{
@@ -92,6 +93,7 @@ string Game::update()
 	}
 
 	player->update();
+	allObjects[0]->update();
 
 	return "";
 }
@@ -156,7 +158,7 @@ void Game::loadMap()
 			float pY = atof(token.c_str());
 			if (player)
 				delete player;
-			player = new GameObject(vec2(pX, pY), "ball.bmp", 0.8, 0.8, "circle");
+			player = new GameObject(vec2(pX, pY), "ball2.bmp", 0.8, 0.8, "circle");
 		}
 
 		else if (token == "nrOfObjects")
@@ -194,11 +196,16 @@ void Game::loadMap()
 			string clr = token;
 			if (allObjects)
 			{
-				if (walls < nrOfObjects)
+				if (walls < nrOfObjects - 1)
 				{
 					clr.append(".bmp");
 					allObjects[walls] = new GameObject(vec2(wX, wY), clr, 1.0, 1.0, "rectangle");
 					walls++;
+				}
+				else if (walls < nrOfObjects)
+				{
+					clr.append(".bmp");
+					allObjects[walls] = new GameObject(vec2(wX, wY), clr, 4.0, 1.0, "rectangle");
 				}
 			}
 		}
