@@ -86,6 +86,7 @@ string Game::update()
 	Physics* p = Physics::getPhysics();
 	p->gravity(player);
 	p->rotate(player);
+	p->rotate(allObjects[2]);
 
 	if (collide(player))
 	{
@@ -93,7 +94,7 @@ string Game::update()
 	}
 
 	player->update();
-	allObjects[0]->update();
+	allObjects[2]->update();
 
 	return "";
 }
@@ -158,7 +159,7 @@ void Game::loadMap()
 			float pY = atof(token.c_str());
 			if (player)
 				delete player;
-			player = new GameObject(vec2(pX, pY), "ball2.bmp", 0.8, 0.8, "circle");
+			player = new GameObject(vec2(pX, pY), "ball.bmp", 0.8, 0.8, "circle");
 		}
 
 		else if (token == "nrOfObjects")
