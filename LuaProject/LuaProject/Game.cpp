@@ -86,17 +86,15 @@ string Game::update()
 	Physics* p = Physics::getPhysics();
 	p->gravity(player);
 
-	if (collide(player))
-	{
-		//player->setPos(pPlayer);
-	}
+	collide(player);
+
 
 	player->update();
 
 	return "";
 }
 
-bool Game::collide(GameObject* player)
+void Game::collide(GameObject* player)
 {
 	Geometry playerGeo = player->getGeoInfo();
 	bool hit = false;
@@ -108,9 +106,9 @@ bool Game::collide(GameObject* player)
 		{
 			Physics* p = Physics::getPhysics();
 			p->collide(player, allObjects[c]);
+			return;
 		}
 	}
-	return hit;
 }
 
 void Game::restart()

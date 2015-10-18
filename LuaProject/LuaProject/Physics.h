@@ -8,6 +8,10 @@ class Physics
 private:
 	static Physics* singleton;
 	Physics();
+
+	void collideSphereSphere(GameObject* sph1, GameObject* sph2);
+	void collideSphereRect(GameObject* sph, GameObject* rect);
+	void collideRectRect(GameObject* rect1, GameObject* rect2);
 public:
 	static Physics* getPhysics();
 

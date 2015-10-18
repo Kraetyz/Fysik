@@ -22,7 +22,7 @@ private:
 	//lua_State* map = 0;
 	int luaErrorHandlerPos = 0;
 
-	bool collide(GameObject* player);
+	void collide(GameObject* player);
 public:
 	Game();
 	~Game();
