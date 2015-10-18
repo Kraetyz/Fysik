@@ -92,13 +92,26 @@ void GameObject::updateUV(float dx, float dy)
 void GameObject::updateUV(float angle)
 {
 	float tempX = 0, tempY = 0;
-
+	float toRad = radians(angle);
+	vec2 boxcorners[4];
+	
+	boxcorners[0] = UV[0] - gInfo.getPos();
+	boxcorners[1] = UV[1] - gInfo.getPos();
+	boxcorners[2] = UV[2] - gInfo.getPos();
+	boxcorners[3] = UV[3] - gInfo.getPos();
 	for(int i = 0; i < 4; i++)
 	{
-		tempX = UV[i].x;
-		tempY = UV[i].y;
-		UV[i].x = tempX * glm::cos(angle) - tempY * glm::sin(angle);
-		UV[i].y = tempX * glm::sin(angle) + tempY * glm::cos(angle);
+		//boxcorners[i].x -= 300;
+		//boxcorners[i].y -= 300;
+		//boxcorners[i].x /= 300;
+		//boxcorners[i].y /= 300;
+		tempX = boxcorners[i].x;
+		tempY = boxcorners[i].y;
+		boxcorners[i].x = tempX * glm::cos(toRad) - tempY * glm::sin(toRad);
+		boxcorners[i].y = tempX * glm::sin(toRad) + tempY * glm::cos(toRad);
+
+		boxcorners[i] += gInfo.getPos();
+		UV[i] = boxcorners[i];
 	}
 }
 
@@ -219,6 +232,7 @@ void GameObject::update()
 	{
 		resultantM += moments[i];
 	}
+	moments.clear();
 	float alpha = resultantM / mInfo.inertia;
 	mInfo.acceleration = alpha;
 	mInfo.velocity += mInfo.acceleration;

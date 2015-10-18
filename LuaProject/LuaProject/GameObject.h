@@ -56,7 +56,7 @@ private:
 	void updateUV(float dx, float dy);
 
 	void updateUV(float angle);
-	void move(float dx, float dy);
+	
 	void rotate(float dv);
 
 	void setInertia();
@@ -71,7 +71,7 @@ public:
 	vec2 getOrigPos();
 	void setPos(vec2 pos);
 	Geometry getGeoInfo(){return gInfo;}
-
+	void move(float dx, float dy);
 	void applyForce(vec2 F);
 	void applyMoment(float M);
 	void update();

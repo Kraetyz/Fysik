@@ -213,7 +213,7 @@ bool Geometry::SphereOnSphereColl(glm::vec2 aPos1, glm::vec2 aPos2, float aRadiu
 
 bool Geometry::BoxOnSphereColl(glm::vec2 aBoxPos, glm::vec2 aSpherePos, float aWidth, float aHeight, float aRadius, float aBoxAngle)
 {
-	
+	float toRad = glm::radians(aBoxAngle);
 	glm::vec2 circleToRectSpace = aSpherePos;
 	/*
 	box2Corners[i].x = tempX * glm::cos(aAngle2) - tempY * glm::sin(aAngle2);
@@ -227,8 +227,8 @@ bool Geometry::BoxOnSphereColl(glm::vec2 aBoxPos, glm::vec2 aSpherePos, float aW
 
 	float tempX = circleToRectSpace.x;
 	float tempY = circleToRectSpace.y;
-	circleToRectSpace.x = tempX * glm::cos(aBoxAngle) - tempY * glm::sin(aBoxAngle);
-	circleToRectSpace.y = tempX * glm::sin(aBoxAngle) + tempY * glm::cos(aBoxAngle);
+	circleToRectSpace.x = tempX * glm::cos(toRad) - tempY * glm::sin(toRad);
+	circleToRectSpace.y = tempX * glm::sin(toRad) + tempY * glm::cos(toRad);
 
 	//Now we just calculate AABB vs Circle using circleToRectSpace
 

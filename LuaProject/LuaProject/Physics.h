@@ -16,6 +16,7 @@ public:
 	static Physics* getPhysics();
 
 	void gravity(GameObject* obj);
+	void rotate(GameObject* obj);
 
 	void collide(GameObject* obj1, GameObject* obj2);
 
