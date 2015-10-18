@@ -208,6 +208,7 @@ void GameObject::update()
 	{
 		resultantF += forces[c];
 	}
+	forces.clear();
 	vec2 a = resultantF / fInfo.mass;
 	fInfo.acceleration = a;
 	fInfo.velocity += fInfo.acceleration;

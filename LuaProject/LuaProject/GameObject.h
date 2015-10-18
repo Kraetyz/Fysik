@@ -64,7 +64,6 @@ protected:
 	void emptyTexture();
 	bool loadBMP(string name);
 public:
-	void move(float dx, float dy);
 	GameObject();
 	GameObject(vec2 pos, string texName, float sizeX, float sizeY, string type);
 	void getUV(vec2 toFill[]);
