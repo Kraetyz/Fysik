@@ -26,7 +26,7 @@ void Physics::gravity(GameObject* obj)
 
 void Physics::rotate(GameObject* obj)
 {
-	obj->applyMoment(0.000001);
+	obj->applyMoment(0.0000001);
 }
 
 void Physics::collideSphereSphere(GameObject* sph1, GameObject* sph2)
@@ -107,6 +107,7 @@ void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
 
 	vec2 boxNormal = vec2(0, 0);
 	bool x = false;
+
 	if (circleToRectSpace.x < 0.0f) //if less than zero, to left of rect center
 	{
 		if (circleToRectSpace.y > -rCorners[NW].y) //collides at top
@@ -140,8 +141,8 @@ void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
 		}
 	}
 	tempX = boxNormal.x; tempY = boxNormal.y;
-	boxNormal.x = tempX * glm::cos(toRad) - tempY * glm::sin(toRad);
-	boxNormal.y = tempX * glm::sin(toRad) + tempY * glm::cos(toRad);
+	boxNormal.x = tempX * glm::cos(-toRad) - tempY * glm::sin(-toRad);
+	boxNormal.y = tempX * glm::sin(-toRad) + tempY * glm::cos(-toRad);
 
 	vec2 v1new = reflect(sI.velocity, boxNormal);
 	sI.velocity = -v1new;

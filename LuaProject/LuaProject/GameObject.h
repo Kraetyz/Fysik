@@ -33,7 +33,7 @@ struct MomentInfo
 };
 
 //-----NOTIS----
-//Rotation positiv = uppåt från högra sidan, tänk som enhetscirkeln
+//Rotation positiv = uppåt från högra sidan, tänk som enhetscirkeln. Moturs, Albin. Det heter moturs.
 //Rotation negativ = neråt från högra sidan.
 
 class GameObject
@@ -53,9 +53,9 @@ private:
 	std::vector<vec2> forces;
 	std::vector<float> moments;
 
-	void updateUV(float dx, float dy);
+	void updateUV(float dx, float dy);//Updates UV POSITION
 
-	void updateUV(float angle);
+	void updateUV(float angle); //Updates UV ROTATION
 	
 	void rotate(float dv);
 

@@ -91,6 +91,7 @@ void GameObject::updateUV(float dx, float dy)
 
 void GameObject::updateUV(float angle)
 {
+	
 	float tempX = 0, tempY = 0;
 	vec2 boxcorners[4];
 	
