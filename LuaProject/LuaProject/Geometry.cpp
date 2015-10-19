@@ -232,24 +232,6 @@ bool Geometry::BoxOnSphereColl(glm::vec2 aBoxPos, glm::vec2 aSpherePos, float aW
 
 	//Now we just calculate AABB vs Circle using circleToRectSpace
 
-	/*bool intersects(CircleType circle, RectType rect)
-
-{
-circleDistance.x = abs(circle.x - rect.x);
-circleDistance.y = abs(circle.y - rect.y);
-
-if (circleDistance.x > (rect.width/2 + circle.r)) { return false; }
-if (circleDistance.y > (rect.height/2 + circle.r)) { return false; }
-
-if (circleDistance.x <= (rect.width/2)) { return true; }
-if (circleDistance.y <= (rect.height/2)) { return true; }
-
-cornerDistance_sq = (circleDistance.x - rect.width/2)^2 +
-(circleDistance.y - rect.height/2)^2;
-
-return (cornerDistance_sq <= (circle.r^2));
-}*/
-
 	if (circleToRectSpace.x > (aWidth / 2 + aRadius))
 		return 0;
 	if (circleToRectSpace.y > (aHeight / 2 + aRadius))

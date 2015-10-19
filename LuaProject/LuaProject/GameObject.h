@@ -33,7 +33,7 @@ struct MomentInfo
 };
 
 //-----NOTIS----
-//Rotation positiv = uppåt från högra sidan, tänk som enhetscirkeln
+//Rotation positiv = uppåt från högra sidan, tänk som enhetscirkeln. Moturs, Albin. Det heter moturs.
 //Rotation negativ = neråt från högra sidan.
 
 class GameObject
