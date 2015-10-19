@@ -26,7 +26,7 @@ void Physics::gravity(GameObject* obj)
 
 void Physics::rotate(GameObject* obj)
 {
-	obj->applyMoment(0.000001);
+	obj->applyMoment(0.0000001);
 }
 
 void Physics::collideSphereSphere(GameObject* sph1, GameObject* sph2)
