@@ -53,9 +53,9 @@ private:
 	std::vector<vec2> forces;
 	std::vector<float> moments;
 
-	void updateUV(float dx, float dy);
+	void updateUV(float dx, float dy);//Updates UV POSITION
 
-	void updateUV(float angle);
+	void updateUV(float angle); //Updates UV ROTATION
 	
 	void rotate(float dv);
 
