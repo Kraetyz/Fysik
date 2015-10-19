@@ -92,7 +92,6 @@ void GameObject::updateUV(float dx, float dy)
 void GameObject::updateUV(float angle)
 {
 	float tempX = 0, tempY = 0;
-	float toRad = radians(angle);
 	vec2 boxcorners[4];
 	
 	boxcorners[0] = UV[0] - gInfo.getPos();
@@ -107,8 +106,8 @@ void GameObject::updateUV(float angle)
 		//boxcorners[i].y /= 300;
 		tempX = boxcorners[i].x;
 		tempY = boxcorners[i].y;
-		boxcorners[i].x = tempX * glm::cos(toRad) - tempY * glm::sin(toRad);
-		boxcorners[i].y = tempX * glm::sin(toRad) + tempY * glm::cos(toRad);
+		boxcorners[i].x = tempX * glm::cos(angle) - tempY * glm::sin(angle);
+		boxcorners[i].y = tempX * glm::sin(angle) + tempY * glm::cos(angle);
 
 		boxcorners[i] += gInfo.getPos();
 		UV[i] = boxcorners[i];
@@ -127,7 +126,7 @@ void GameObject::move(float dx, float dy)
 void GameObject::rotate(float dv)
 {
 	gInfo.setAngle(gInfo.getAngle() + dv);
-	updateUV(gInfo.getAngle());
+	updateUV(dv);
 }
 
 void GameObject::emptyTexture()
