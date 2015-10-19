@@ -78,10 +78,80 @@ void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
 
 	vec2 rCorners[4];
 	rect->getUV(rCorners); //Get the corners of the rectangle, which coincide with its UV coords :^)
-	
+
 	vec2 sPos = sG.getPos();
 	vec2 rPos = rG.getPos();
 
+	float toRad = rG.getAngle();
+	glm::vec2 circleToRectSpace = sPos;
+	/*
+	box2Corners[i].x = tempX  glm::cos(aAngle2) - tempY  glm::sin(aAngle2);
+	box2Corners[i].y = tempX  glm::sin(aAngle2) + tempY  glm::cos(aAngle2);*/
+
+	circleToRectSpace.x -= rPos.x;
+	circleToRectSpace.y -= rPos.y;
+
+	float tempX = circleToRectSpace.x;
+	float tempY = circleToRectSpace.y;
+	circleToRectSpace.x = tempX * glm::cos(toRad) - tempY * glm::sin(toRad);
+	circleToRectSpace.y = tempX * glm::sin(toRad) + tempY * glm::cos(toRad);
+
+	for (int c = 0; c < 4; c++)
+	{
+		rCorners[c] -= rPos;
+		tempX = rCorners[c].x;
+		tempY = rCorners[c].y;
+		rCorners[c].x = tempX * glm::cos(-toRad) - tempY * glm::sin(-toRad);
+		rCorners[c].y = tempX * glm::sin(-toRad) + tempY * glm::cos(-toRad);
+	}
+
+	vec2 boxNormal = vec2(0, 0);
+	bool x = false;
+	if (circleToRectSpace.x < 0.0f) //if less than zero, to left of rect center
+	{
+		if (circleToRectSpace.y > -rCorners[NW].y) //collides at top
+		{
+			boxNormal = vec2(0, sPos.y - rPos.y);
+		}
+		else if (circleToRectSpace.y < -rCorners[SW].y) //collides at bottom
+		{
+			boxNormal = vec2(0, sPos.y - rPos.y);
+		}
+		else //collides at left
+		{
+			boxNormal = vec2(sPos.x - rPos.x, 0);
+			x = true;
+		}
+	}
+	else //right of rect center
+	{
+		if (circleToRectSpace.y > -rCorners[NE].y) //collides at top
+		{
+			boxNormal = vec2(0, sPos.y - rPos.y);
+		}
+		else if (circleToRectSpace.y < -rCorners[SE].y) //collides at bottom
+		{
+			boxNormal = vec2(0, sPos.y - rPos.y);
+		}
+		else //collides at left
+		{
+			boxNormal = vec2(sPos.x - rPos.x, 0);
+			x = true;
+		}
+	}
+	tempX = boxNormal.x; tempY = boxNormal.y;
+	boxNormal.x = tempX * glm::cos(toRad) - tempY * glm::sin(toRad);
+	boxNormal.y = tempX * glm::sin(toRad) + tempY * glm::cos(toRad);
+
+	vec2 v1new = reflect(sI.velocity, boxNormal);
+	sI.velocity = -v1new;
+	if (x)
+		sI.velocity.y = -sI.velocity.y;
+	else
+		sI.velocity.x = -sI.velocity.x;
+
+	sph->setPos(vec2(sPos.x + sI.velocity.x, sPos.y + sI.velocity.y));
+	sph->setForceInfo(sI);
 }
 
 void Physics::collideRectRect(GameObject* rect1, GameObject* rect2)
@@ -90,7 +160,7 @@ void Physics::collideRectRect(GameObject* rect1, GameObject* rect2)
 
 void Physics::collide(GameObject* obj1, GameObject* obj2)
 {
-	collideSphereSphere(obj1, obj2);
+	//collideSphereSphere(obj1, obj2);
 	Geometry oI1 = obj1->getGeoInfo();
 	Geometry oI2 = obj2->getGeoInfo();
 
