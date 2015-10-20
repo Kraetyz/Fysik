@@ -55,7 +55,7 @@ bool Geometry::checkCollision(GameObject* myObj, GameObject* aObj)
 			//aGeom is a box
 			if (aGeom.myHeight != -1 && aGeom.myWidth != -1)
 			{
-				vec2 corners[4];
+				glm::vec2 corners[4];
 				aObj->getUV(corners);
 				BoxOnSphereColl(corners, myPos, myRadius);
 			}
@@ -75,7 +75,7 @@ bool Geometry::checkCollision(GameObject* myObj, GameObject* aObj)
 		//this is a box
 		else if (myWidth > 0 && myHeight > 0)
 		{
-			vec2 corners[4];
+			glm::vec2 corners[4];
 			myObj->getUV(corners);
 			BoxOnSphereColl(corners, aGeom.myPos, aGeom.myRadius);
 		}
@@ -217,7 +217,7 @@ bool Geometry::SphereOnSphereColl(glm::vec2 aPos1, glm::vec2 aPos2, float aRadiu
 	return 0;
 }
 
-bool Geometry::BoxOnSphereColl(glm::vec2 aBoxPos, glm::vec2 aSpherePos, float aWidth, float aHeight, float aRadius, float aBoxAngle)
+bool Geometry::BoxOnSphereColl(glm::vec2 aBoxCorners[], glm::vec2 aSpherePos, float aRadius)
 {
 	glm::vec2 circleToRectSpace = aSpherePos;
 	/*
