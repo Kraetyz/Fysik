@@ -104,8 +104,7 @@ void Game::collide(GameObject* player)
 	bool hit = false;
 	for (int c = 0; c < nrOfObjects && !hit; c++)
 	{
-		Geometry g = allObjects[c]->getGeoInfo();
-		hit = playerGeo.checkCollision(g);
+		hit = playerGeo.checkCollision(player, allObjects[c]);
 		if (hit)
 		{
 			Physics* p = Physics::getPhysics();
