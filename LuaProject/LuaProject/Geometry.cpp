@@ -57,7 +57,7 @@ bool Geometry::checkCollision(GameObject* myObj, GameObject* aObj)
 			{
 				glm::vec2 corners[4];
 				aObj->getUV(corners);
-				return BoxOnSphereColl(corners, myPos, myRadius);
+				return BoxOnSphereColl(corners, aGeom.getAngle(), myPos, myRadius);
 			}
 		}
 
@@ -77,7 +77,7 @@ bool Geometry::checkCollision(GameObject* myObj, GameObject* aObj)
 		{
 			glm::vec2 corners[4];
 			myObj->getUV(corners);
-			return BoxOnSphereColl(corners, aGeom.myPos, aGeom.myRadius);
+			return BoxOnSphereColl(corners, myAngle, aGeom.myPos, aGeom.myRadius);
 		}
 	}
 	//if we get to this point, one of both are illegal
@@ -217,7 +217,7 @@ bool Geometry::SphereOnSphereColl(glm::vec2 aPos1, glm::vec2 aPos2, float aRadiu
 	return 0;
 }
 
-bool Geometry::BoxOnSphereColl(glm::vec2 aBoxCorners[], glm::vec2 aSpherePos, float aRadius)
+bool Geometry::BoxOnSphereColl(glm::vec2 aBoxCorners[], float aAngle, glm::vec2 aSpherePos, float aRadius)
 {
 	glm::vec2 circleToRectSpace = aSpherePos;
 	/*

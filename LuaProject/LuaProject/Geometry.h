@@ -19,7 +19,7 @@ private:
 
 	bool BoxOnBoxColl(glm::vec2 aPos1, glm::vec2 aPos2, float aWidth1, float aWidth2, float aHeight1, float aHeight2, float aAngle1, float aAngle2);
 	bool SphereOnSphereColl(glm::vec2 aPos1, glm::vec2 aPos2, float aRadius1, float aRadius2);
-	bool BoxOnSphereColl(glm::vec2 aBoxCorners[], glm::vec2 aSpherePos, float aRadius);
+	bool BoxOnSphereColl(glm::vec2 aBoxCorners[], float aAngle, glm::vec2 aSpherePos, float aRadius);
 public:
 	Geometry();
 	Geometry(glm::vec2 aPos, float aRadius);
