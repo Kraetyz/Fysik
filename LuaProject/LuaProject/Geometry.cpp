@@ -227,6 +227,8 @@ bool Geometry::BoxOnSphereColl(glm::vec2 aBoxCorners[], float aAngle, glm::vec2 
 	glm::vec2 boxCorners[4];
 	float pi = 3.14159265359;
 	float newAngle = 2 * pi - aAngle;
+
+
 	for (int i = 0; i < 4; i++)
 	{
 		boxCorners[i] = aBoxCorners[i] - aSpherePos;
@@ -250,14 +252,14 @@ bool Geometry::BoxOnSphereColl(glm::vec2 aBoxCorners[], float aAngle, glm::vec2 
 
 	for (int i = 0; i < 4; i++)
 	{
-		if (aBoxCorners[i].x >= boxXMax)
-			boxXMax = aBoxCorners[i].x;
-		if (aBoxCorners[i].x <= boxXMin)
-			boxXMin = aBoxCorners[i].x;
-		if (aBoxCorners[i].y >= boxYMax)
-			boxYMax = aBoxCorners[i].y;
-		if (aBoxCorners[i].y <= boxYMin)
-			boxYMin = aBoxCorners[i].y;
+		if (boxCorners[i].x + aSpherePos.x >= boxXMax)
+			boxXMax = boxCorners[i].x + aSpherePos.x;
+		if (boxCorners[i].x + aSpherePos.x <= boxXMin)
+			boxXMin = boxCorners[i].x + aSpherePos.x;
+		if (boxCorners[i].y + aSpherePos.y >= boxYMax)
+			boxYMax = boxCorners[i].y + aSpherePos.y;
+		if (boxCorners[i].y + aSpherePos.y <= boxYMin)
+			boxYMin = boxCorners[i].y + aSpherePos.y;
 	}
 
 	if ((aSpherePos.x < boxXMax + aRadius && aSpherePos.x > boxXMin - aRadius
