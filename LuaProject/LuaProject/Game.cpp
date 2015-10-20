@@ -85,14 +85,15 @@ string Game::update()
 
 	Physics* p = Physics::getPhysics();
 	p->gravity(player);
-	p->rotate(player);
-	p->rotate(allObjects[2]);
+
+	allObjects[1]->applyMoment(0.00001);
+	allObjects[2]->applyMoment(0.00005);
 
 	collide(player);
 
-
 	player->update();
-	allObjects[2]->update();
+	for (int c=0; c<nrOfObjects; c++)
+		allObjects[c]->update();
 
 	return "";
 }

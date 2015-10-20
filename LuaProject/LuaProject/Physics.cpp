@@ -24,11 +24,6 @@ void Physics::gravity(GameObject* obj)
 	obj->applyForce(vec2(0, -0.00982));
 }
 
-void Physics::rotate(GameObject* obj)
-{
-	obj->applyMoment(0.0000001);
-}
-
 void Physics::collideSphereSphere(GameObject* sph1, GameObject* sph2)
 {
 	Geometry oG1 = sph1->getGeoInfo();
