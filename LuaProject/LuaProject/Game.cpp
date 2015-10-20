@@ -155,7 +155,7 @@ void Game::loadMap()
 			if (player)
 				delete player;
 			player = new GameObject(vec2(pX, pY), "ball.bmp", 0.8, 0.8, "circle");
-			player->setMass(50.0f);
+			player->setMass(50000.0f);
 		}
 
 		else if (token == "wall")

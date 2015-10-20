@@ -138,9 +138,30 @@ void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
 	tempX = boxNormal.x; tempY = boxNormal.y;
 	boxNormal.x = tempX * glm::cos(angle) - tempY * glm::sin(angle);
 	boxNormal.y = tempX * glm::sin(angle) + tempY * glm::cos(angle);
-	boxNormal = normalize(boxNormal);
+	/*boxNormal = normalize(boxNormal);
 
 	vec2 v1new = reflect(sI.velocity, boxNormal);
+
+	sI.velocity = v1new;*/
+
+	vec2 unitVec = boxNormal / (sqrt(boxNormal.x*boxNormal.x + boxNormal.y*boxNormal.y));
+	vec2 tangent = vec2(-unitVec.y, unitVec.x);
+
+	float v1normal = dot(unitVec, sI.velocity);
+	float v2normal = dot(unitVec, rI.velocity);
+	float v1tangent = dot(tangent, sI.velocity);
+	float v2tangent = dot(tangent, rI.velocity);
+
+	float v1normalNew = (v1normal*(sI.mass - rI.mass) + 2 * rI.mass*v2normal) / (sI.mass + rI.mass);
+	float v2normalNew = (v1normal*(rI.mass - sI.mass) + 2 * sI.mass*v1normal) / (sI.mass + rI.mass);
+
+	vec2 v1n = unitVec*v1normalNew;
+	vec2 v2n = unitVec*v2normalNew;
+	vec2 v1t = unitVec*v1tangent;
+	vec2 v2t = unitVec*v2tangent;
+
+	vec2 v1new = v1n + v1t;
+	vec2 v2new = v2n + v2t;
 
 	sI.velocity = v1new;
 
