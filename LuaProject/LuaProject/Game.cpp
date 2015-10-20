@@ -155,7 +155,7 @@ void Game::loadMap()
 			if (player)
 				delete player;
 			player = new GameObject(vec2(pX, pY), "ball.bmp", 0.8, 0.8, "circle");
-			player->setMass(50000.0f);
+			player->setMass(50.0f);
 		}
 
 		else if (token == "wall")
@@ -190,7 +190,7 @@ void Game::loadMap()
 			allObjects.push_back(new GameObject(vec2(wX, wY), clr, size.x, size.y, "rectangle"));
 			//allObjects.push_back(new GameObject(vec2(wX, wY), "ball.bmp", 1, 1, "circle"));
 			allObjects[allObjects.size() - 1]->setAngle(angle);
-			allObjects[allObjects.size() - 1]->setMass(600000.0f);
+			allObjects[allObjects.size() - 1]->setMass(6000000.0f);
 		}
 	}
 	in.close();
