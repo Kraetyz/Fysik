@@ -70,6 +70,7 @@ void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
 	Geometry rG = rect->getGeoInfo();
 	ForceInfo sI = sph->getForceInfo();
 	ForceInfo rI = rect->getForceInfo();
+	MomentInfo rM = rect->getMomentInfo();
 
 	vec2 rCorners[4];
 	rect->getUV(rCorners); //Get the corners of the rectangle, which coincide with its UV coords :^)
@@ -77,7 +78,7 @@ void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
 	vec2 sPos = sG.getPos();
 	vec2 rPos = rG.getPos();
 
-	float toRad = rG.getAngle();
+	float angle = rG.getAngle();
 	glm::vec2 circleToRectSpace = sPos;
 	/*
 	box2Corners[i].x = tempX  glm::cos(aAngle2) - tempY  glm::sin(aAngle2);
@@ -88,16 +89,16 @@ void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
 
 	float tempX = circleToRectSpace.x;
 	float tempY = circleToRectSpace.y;
-	circleToRectSpace.x = tempX * glm::cos(toRad) - tempY * glm::sin(toRad);
-	circleToRectSpace.y = tempX * glm::sin(toRad) + tempY * glm::cos(toRad);
+	circleToRectSpace.x = tempX * glm::cos(angle) - tempY * glm::sin(angle);
+	circleToRectSpace.y = tempX * glm::sin(angle) + tempY * glm::cos(angle);
 
 	for (int c = 0; c < 4; c++)
 	{
 		rCorners[c] -= rPos;
 		tempX = rCorners[c].x;
 		tempY = rCorners[c].y;
-		rCorners[c].x = tempX * glm::cos(-toRad) - tempY * glm::sin(-toRad);
-		rCorners[c].y = tempX * glm::sin(-toRad) + tempY * glm::cos(-toRad);
+		rCorners[c].x = tempX * glm::cos(-angle) - tempY * glm::sin(-angle);
+		rCorners[c].y = tempX * glm::sin(-angle) + tempY * glm::cos(-angle);
 	}
 
 	vec2 boxNormal = vec2(0, 0);
@@ -136,15 +137,13 @@ void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
 		}
 	}
 	tempX = boxNormal.x; tempY = boxNormal.y;
-	boxNormal.x = tempX * glm::cos(-toRad) - tempY * glm::sin(-toRad);
-	boxNormal.y = tempX * glm::sin(-toRad) + tempY * glm::cos(-toRad);
+	boxNormal.x = tempX * glm::cos(angle) - tempY * glm::sin(angle);
+	boxNormal.y = tempX * glm::sin(angle) + tempY * glm::cos(angle);
+	boxNormal = normalize(boxNormal);
 
 	vec2 v1new = reflect(sI.velocity, boxNormal);
-	sI.velocity = -v1new;
-	if (x)
-		sI.velocity.y = -sI.velocity.y;
-	else
-		sI.velocity.x = -sI.velocity.x;
+
+	sI.velocity = v1new;
 
 	sph->setPos(vec2(sPos.x + sI.velocity.x, sPos.y + sI.velocity.y));
 	sph->setForceInfo(sI);

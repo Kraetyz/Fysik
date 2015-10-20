@@ -78,6 +78,9 @@ public:
 
 	ForceInfo getForceInfo(){return fInfo;}
 	void setForceInfo(ForceInfo fI);
+	MomentInfo getMomentInfo(){
+		return mInfo;
+	}
 };
 
 #endif
