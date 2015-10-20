@@ -4,6 +4,8 @@
 #include "glm/glm/glm.hpp"
 #include "glm/glm/gtx/transform.hpp"
 
+class GameObject;
+
 class Geometry
 {
 private:
@@ -17,14 +19,14 @@ private:
 
 	bool BoxOnBoxColl(glm::vec2 aPos1, glm::vec2 aPos2, float aWidth1, float aWidth2, float aHeight1, float aHeight2, float aAngle1, float aAngle2);
 	bool SphereOnSphereColl(glm::vec2 aPos1, glm::vec2 aPos2, float aRadius1, float aRadius2);
-	bool BoxOnSphereColl(glm::vec2 aBoxPos, glm::vec2 aSpherePos, float aWidth, float aHeight, float aRadius, float aBoxAngle);
+	bool BoxOnSphereColl(glm::vec2 aBoxCorners[], glm::vec2 aSpherePos, float aRadius);
 public:
 	Geometry();
 	Geometry(glm::vec2 aPos, float aRadius);
 	Geometry(glm::vec2 aPos, float aWidth, float aHeight);
 	~Geometry();
 
-	bool checkCollision(Geometry aGeom);
+	bool checkCollision(GameObject* myObj, GameObject* aObj);
 
 	glm::vec2 getPos();
 	float getRadius();

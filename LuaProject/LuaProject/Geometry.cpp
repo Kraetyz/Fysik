@@ -1,4 +1,5 @@
-#include"Geometry.h"
+#include "Geometry.h"
+#include "GameObject.h"
 
 #pragma region constructors/destructor
 
@@ -29,8 +30,9 @@ Geometry::~Geometry()
 
 #pragma region collision
 
-bool Geometry::checkCollision(Geometry aGeom)
+bool Geometry::checkCollision(GameObject* myObj, GameObject* aObj)
 {
+	Geometry aGeom = aObj->getGeoInfo();
 	//TODO: Redo the if-statements, there are more optimal ways to write this
 
 	//aGeom is not a sphere
@@ -53,7 +55,9 @@ bool Geometry::checkCollision(Geometry aGeom)
 			//aGeom is a box
 			if (aGeom.myHeight != -1 && aGeom.myWidth != -1)
 			{
-				return BoxOnSphereColl(aGeom.myPos, myPos, aGeom.myWidth, aGeom.myHeight, myRadius, aGeom.myAngle);
+				vec2 corners[4];
+				aObj->getUV(corners);
+				BoxOnSphereColl(corners, myPos, myRadius);
 			}
 		}
 
@@ -71,7 +75,9 @@ bool Geometry::checkCollision(Geometry aGeom)
 		//this is a box
 		else if (myWidth > 0 && myHeight > 0)
 		{
-			return BoxOnSphereColl(myPos, aGeom.myPos, myWidth, myHeight, aGeom.myRadius, myAngle);
+			vec2 corners[4];
+			myObj->getUV(corners);
+			BoxOnSphereColl(corners, aGeom.myPos, aGeom.myRadius);
 		}
 	}
 	//if we get to this point, one of both are illegal
