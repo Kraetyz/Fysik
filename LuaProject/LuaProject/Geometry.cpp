@@ -224,6 +224,26 @@ bool Geometry::BoxOnSphereColl(glm::vec2 aBoxPos, glm::vec2 aSpherePos, float aW
 	box2Corners[i].x = tempX * glm::cos(aAngle2) - tempY * glm::sin(aAngle2);
 	box2Corners[i].y = tempX * glm::sin(aAngle2) + tempY * glm::cos(aAngle2);*/
 
+	glm::vec2 boxCorners[4];
+
+	glm::vec2 lines[4];
+
+	lines[0] = boxCorners[0] - boxCorners[1];
+	lines[1] = boxCorners[0] - boxCorners[2];
+	lines[2] = boxCorners[3] - boxCorners[1];
+	lines[3] = boxCorners[3] - boxCorners[2];
+
+	float a = (lines[0].x * lines[0].x) + (lines[0].y * lines[0].y);
+	float b = 2 * ((lines[0].x * boxCorners[0].x) + (lines[0].y * boxCorners[0].y));
+	float c = (boxCorners[0].x * boxCorners[0].x) + (boxCorners[0].y * boxCorners[0].y) - (aRadius * aRadius);
+
+	float delta = b * b - (4 * a * c);
+	if (delta < 0)
+		return 0;
+	else
+		return 1;
+
+	/*
 	circleToRectSpace.x -= aBoxPos.x;
 	circleToRectSpace.y -= aBoxPos.y;
 
@@ -250,7 +270,7 @@ bool Geometry::BoxOnSphereColl(glm::vec2 aBoxPos, glm::vec2 aSpherePos, float aW
 	float cornerDistSq = ((circleToRectSpace.x - aWidth / 2) * (circleToRectSpace.x - aWidth / 2))
 		+ ((circleToRectSpace.y - aHeight / 2) * (circleToRectSpace.y - aHeight / 2));
 
-	return (cornerDistSq <= (aRadius * aRadius));
+	return (cornerDistSq <= (aRadius * aRadius));*/
 }
 
 #pragma endregion
