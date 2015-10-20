@@ -76,11 +76,10 @@ public:
 	void applyMoment(float M);
 	void update();
 
+	void setAngle(float angle);
+
 	ForceInfo getForceInfo(){return fInfo;}
 	void setForceInfo(ForceInfo fI);
-	MomentInfo getMomentInfo(){
-		return mInfo;
-	}
 };
 
 #endif

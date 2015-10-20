@@ -9,6 +9,12 @@ void GameObject::setPos(vec2 pos)
 	UV[SE] = vec2(pos.x + sizeX*0.032, pos.y + sizeY*0.032);
 }
 
+void GameObject::setAngle(float angle)
+{
+	gInfo.setAngle(angle);
+	updateUV(angle);
+}
+
 GameObject::GameObject()
 {
 }

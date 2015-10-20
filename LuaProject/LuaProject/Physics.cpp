@@ -70,7 +70,6 @@ void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
 	Geometry rG = rect->getGeoInfo();
 	ForceInfo sI = sph->getForceInfo();
 	ForceInfo rI = rect->getForceInfo();
-	MomentInfo rM = rect->getMomentInfo();
 
 	vec2 rCorners[4];
 	rect->getUV(rCorners); //Get the corners of the rectangle, which coincide with its UV coords :^)

@@ -86,9 +86,6 @@ string Game::update()
 	Physics* p = Physics::getPhysics();
 	p->gravity(player);
 
-	allObjects[1]->applyMoment(0.000001);
-	allObjects[2]->applyMoment(0.000005);
-
 	collide(player);
 
 	player->update();
@@ -205,6 +202,7 @@ void Game::loadMap()
 				{
 					clr.append(".bmp");
 					allObjects[walls] = new GameObject(vec2(wX, wY), clr, 4.0, 1.0, "rectangle");
+					allObjects[walls]->setAngle(3.14159f / 4.0f);
 				}
 			}
 		}
