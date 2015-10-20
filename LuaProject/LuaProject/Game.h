@@ -6,23 +6,28 @@
 #include "Lua/lualib.h"
 
 #include <iostream>
+#include <vector>
 
 #include "State.h"
 #include "Renderer.h"
 #include "GameObject.h"
 #include "Physics.h"
 
+using namespace std;
+
 class Game : public State
 {
 private:
 	GameObject* player = 0;
-	GameObject** allObjects = 0;
-	int nrOfObjects;
+	vector<GameObject*> allObjects;
+
 	lua_State* L = 0;
 	//lua_State* map = 0;
 	int luaErrorHandlerPos = 0;
 
 	void collide(GameObject* player);
+
+	void sortAllObjects();
 public:
 	Game();
 	~Game();

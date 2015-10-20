@@ -21,7 +21,7 @@ void Physics::release()
 
 void Physics::gravity(GameObject* obj)
 {
-	obj->applyForce(vec2(0, -0.00982));
+	obj->applyForce(vec2(0, -0.0000982*obj->getForceInfo().mass));
 }
 
 void Physics::collideSphereSphere(GameObject* sph1, GameObject* sph2)
@@ -104,7 +104,7 @@ void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
 	bool x = false;
 
 	if (circleToRectSpace.x < 0.0f) //if less than zero, to left of rect center
-	{
+	{	
 		if (circleToRectSpace.y > -rCorners[NW].y) //collides at top
 		{
 			boxNormal = vec2(0, sPos.y - rPos.y);

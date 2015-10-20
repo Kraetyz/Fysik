@@ -77,6 +77,7 @@ public:
 	void update();
 
 	void setAngle(float angle);
+	void setMass(float m);
 
 	ForceInfo getForceInfo(){return fInfo;}
 	void setForceInfo(ForceInfo fI);

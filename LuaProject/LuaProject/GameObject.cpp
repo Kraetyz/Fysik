@@ -15,6 +15,12 @@ void GameObject::setAngle(float angle)
 	updateUV(angle);
 }
 
+void GameObject::setMass(float m)
+{
+	fInfo.mass = m;
+	mInfo.mass = m;
+}
+
 GameObject::GameObject()
 {
 }

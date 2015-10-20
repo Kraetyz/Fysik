@@ -30,11 +30,10 @@ Game::Game()
 Game::~Game()
 {
 	delete player;
-	for (int c = 0; c < nrOfObjects; c++)
+	for (int c = 0; c < allObjects.size(); c++)
 	{
 		delete allObjects[c];
 	}
-	delete[]allObjects;
 
 	Physics::release();
 
@@ -45,7 +44,7 @@ void Game::Render()
 {
 	render->setProgram();
 	render->Render(player);
-	for (int c = 0; c < nrOfObjects; c++)
+	for (int c = 0; c < allObjects.size(); c++)
 	{
 		render->Render(allObjects[c]);
 	}
@@ -89,7 +88,7 @@ string Game::update()
 	collide(player);
 
 	player->update();
-	for (int c=0; c<nrOfObjects; c++)
+	for (int c=0; c<allObjects.size(); c++)
 		allObjects[c]->update();
 
 	return "";
@@ -97,9 +96,10 @@ string Game::update()
 
 void Game::collide(GameObject* player)
 {
+	sortAllObjects();
 	Geometry playerGeo = player->getGeoInfo();
 	bool hit = false;
-	for (int c = 0; c < nrOfObjects && !hit; c++)
+	for (int c = 0; c < allObjects.size() && !hit; c++)
 	{
 		hit = playerGeo.checkCollision(player, allObjects[c]);
 		if (hit)
@@ -155,30 +155,11 @@ void Game::loadMap()
 			if (player)
 				delete player;
 			player = new GameObject(vec2(pX, pY), "ball.bmp", 0.8, 0.8, "circle");
-		}
-
-		else if (token == "nrOfObjects")
-		{
-			token = "";
-			ss >> token;
-			int nr = atoi(token.c_str());
-			if (allObjects)
-			{
-				for (int i = 0; i < nrOfObjects; i++)
-				{
-					delete allObjects[i];
-				}
-				delete[] allObjects;
-			}
-
-			allObjects = new GameObject*[nr];
-			nrOfObjects = nr;
+			player->setMass(50.0f);
 		}
 
 		else if (token == "wall")
 		{
-			static int walls = 0;
-
 			token = "";
 			ss >> token;
 			float wX = atof(token.c_str());
@@ -190,16 +171,44 @@ void Game::loadMap()
 			token = "";
 			ss >> token;
 			string clr = token;
-			if (allObjects)
-			{
-				if (walls < nrOfObjects)
-				{
-					clr.append(".bmp");
-					allObjects[walls] = new GameObject(vec2(wX, wY), clr, 1.0, 1.0, "rectangle");
-					walls++;
-				}
-			}
+
+			vec2 size;
+			float angle;
+
+			token = "";
+			ss >> token;
+			size.x = atof(token.c_str());
+			token = "";
+			ss >> token;
+			size.y = atof(token.c_str());
+
+			token = "";
+			ss >> token;
+			angle = atof(token.c_str());
+
+			clr.append(".bmp");
+			allObjects.push_back(new GameObject(vec2(wX, wY), clr, size.x, size.y, "rectangle"));
+			//allObjects.push_back(new GameObject(vec2(wX, wY), "ball.bmp", 1, 1, "circle"));
+			allObjects[allObjects.size() - 1]->setAngle(angle);
+			allObjects[allObjects.size() - 1]->setMass(600000.0f);
 		}
 	}
 	in.close();
+}
+
+void Game::sortAllObjects()
+{
+	vec2 pPos = player->getGeoInfo().getPos();
+	int shortestIndex = 0;
+
+	for (int c = shortestIndex; c < allObjects.size(); c++)
+	{
+		if (length(allObjects[c]->getGeoInfo().getPos() - pPos) < length(allObjects[shortestIndex]->getGeoInfo().getPos() - pPos))
+		{
+			shortestIndex = c;
+		}
+	}
+	GameObject* temp = allObjects[0];
+	allObjects[0] = allObjects[shortestIndex];
+	allObjects[shortestIndex] = temp;
 }
