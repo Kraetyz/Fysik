@@ -229,6 +229,11 @@ bool Geometry::BoxOnSphereColl(glm::vec2 aBoxCorners[], float aAngle, glm::vec2 
 	for (int i = 0; i < 4; i++)
 	{
 		boxCorners[i] = aBoxCorners[i] - aSpherePos;
+		float tempX = boxCorners[i].x;
+		float tempY = boxCorners[i].y;
+
+		boxCorners[i].x = tempX * glm::cos(aAngle) - tempY * glm::sin(aAngle);
+		boxCorners[i].y = tempX * glm::sin(aAngle) + tempY * glm::cos(aAngle);
 	}
 
 	glm::vec2 lines[4];
