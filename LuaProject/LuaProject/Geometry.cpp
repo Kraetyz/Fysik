@@ -219,7 +219,6 @@ bool Geometry::SphereOnSphereColl(glm::vec2 aPos1, glm::vec2 aPos2, float aRadiu
 
 bool Geometry::BoxOnSphereColl(glm::vec2 aBoxCorners[], float aAngle, glm::vec2 aSpherePos, float aRadius)
 {
-	glm::vec2 circleToRectSpace = aSpherePos;
 	/*
 	box2Corners[i].x = tempX * glm::cos(aAngle2) - tempY * glm::sin(aAngle2);
 	box2Corners[i].y = tempX * glm::sin(aAngle2) + tempY * glm::cos(aAngle2);*/

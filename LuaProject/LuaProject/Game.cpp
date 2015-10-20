@@ -196,6 +196,7 @@ void Game::loadMap()
 				{
 					clr.append(".bmp");
 					allObjects[walls] = new GameObject(vec2(wX, wY), clr, 1.0, 1.0, "rectangle");
+					allObjects[walls]->setAngle(0.4 + walls);
 					walls++;
 				}
 				else if (walls < nrOfObjects)
