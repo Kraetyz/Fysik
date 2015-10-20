@@ -57,7 +57,7 @@ bool Geometry::checkCollision(GameObject* myObj, GameObject* aObj)
 			{
 				glm::vec2 corners[4];
 				aObj->getUV(corners);
-				BoxOnSphereColl(corners, myPos, myRadius);
+				return BoxOnSphereColl(corners, myPos, myRadius);
 			}
 		}
 
@@ -77,7 +77,7 @@ bool Geometry::checkCollision(GameObject* myObj, GameObject* aObj)
 		{
 			glm::vec2 corners[4];
 			myObj->getUV(corners);
-			BoxOnSphereColl(corners, aGeom.myPos, aGeom.myRadius);
+			return BoxOnSphereColl(corners, aGeom.myPos, aGeom.myRadius);
 		}
 	}
 	//if we get to this point, one of both are illegal
@@ -226,22 +226,51 @@ bool Geometry::BoxOnSphereColl(glm::vec2 aBoxCorners[], glm::vec2 aSpherePos, fl
 
 	glm::vec2 boxCorners[4];
 
+	for (int i = 0; i < 4; i++)
+	{
+		boxCorners[i] = aBoxCorners[i] - aSpherePos;
+	}
+
 	glm::vec2 lines[4];
 
-	lines[0] = boxCorners[0] - boxCorners[1];
-	lines[1] = boxCorners[0] - boxCorners[2];
-	lines[2] = boxCorners[3] - boxCorners[1];
-	lines[3] = boxCorners[3] - boxCorners[2];
+	lines[0] = boxCorners[1] - boxCorners[0];
+	lines[1] = boxCorners[2] - boxCorners[0];
+	lines[2] = boxCorners[1] - boxCorners[3];
+	lines[3] = boxCorners[2] - boxCorners[3];
 
-	float a = (lines[0].x * lines[0].x) + (lines[0].y * lines[0].y);
-	float b = 2 * ((lines[0].x * boxCorners[0].x) + (lines[0].y * boxCorners[0].y));
-	float c = (boxCorners[0].x * boxCorners[0].x) + (boxCorners[0].y * boxCorners[0].y) - (aRadius * aRadius);
+	float boxXMax, boxXMin, boxYMax, boxYMin;
+	boxXMax = boxYMax = -FLT_MAX;
+	boxXMin = boxYMin = FLT_MAX;
 
-	float delta = b * b - (4 * a * c);
-	if (delta < 0)
-		return 0;
-	else
-		return 1;
+	for (int i = 0; i < 4; i++)
+	{
+		if (aBoxCorners[i].x >= boxXMax)
+			boxXMax = aBoxCorners[i].x;
+		if (aBoxCorners[i].x <= boxXMin)
+			boxXMin = aBoxCorners[i].x;
+		if (aBoxCorners[i].y >= boxYMax)
+			boxYMax = aBoxCorners[i].y;
+		if (aBoxCorners[i].y <= boxYMin)
+			boxYMin = aBoxCorners[i].y;
+	}
+
+	if (aSpherePos.x < boxXMax + aRadius && aSpherePos.x > boxXMin - aRadius
+		&& aSpherePos.y < boxYMax + aRadius && aSpherePos.y > boxYMin - aRadius)
+	{
+
+		for (int i = 0; i < 4; i++)
+		{
+
+			float a = (lines[i].x * lines[i].x) + (lines[i].y * lines[i].y);
+			float b = 2 * ((lines[i].x * boxCorners[i].x) + (lines[i].y * boxCorners[i].y));
+			float c = (boxCorners[i].x * boxCorners[i].x) + (boxCorners[i].y * boxCorners[i].y) - (aRadius * aRadius);
+
+			float delta = b * b - (4 * a * c);
+			if (delta > 0)
+				return 1;
+		}
+	}
+	return 0;
 
 	/*
 	circleToRectSpace.x -= aBoxPos.x;

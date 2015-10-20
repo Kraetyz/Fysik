@@ -86,8 +86,8 @@ string Game::update()
 	Physics* p = Physics::getPhysics();
 	p->gravity(player);
 
-	allObjects[1]->applyMoment(0.00001);
-	allObjects[2]->applyMoment(0.00005);
+	allObjects[1]->applyMoment(0.000001);
+	allObjects[2]->applyMoment(0.000005);
 
 	collide(player);
 
