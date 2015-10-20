@@ -254,21 +254,21 @@ bool Geometry::BoxOnSphereColl(glm::vec2 aBoxCorners[], glm::vec2 aSpherePos, fl
 			boxYMin = aBoxCorners[i].y;
 	}
 
-	if (aSpherePos.x < boxXMax + aRadius && aSpherePos.x > boxXMin - aRadius
-		&& aSpherePos.y < boxYMax + aRadius && aSpherePos.y > boxYMin - aRadius)
+	if ((aSpherePos.x < boxXMax + aRadius && aSpherePos.x > boxXMin - aRadius
+		&& aSpherePos.y < boxYMax + aRadius && aSpherePos.y > boxYMin - aRadius))
 	{
+			for (int i = 0; i < 4; i++)
+			{
 
-		for (int i = 0; i < 4; i++)
-		{
+				float a = (lines[i].x * lines[i].x) + (lines[i].y * lines[i].y);
+				float b = 2 * ((lines[i].x * boxCorners[i].x) + (lines[i].y * boxCorners[i].y));
+				float c = (boxCorners[i].x * boxCorners[i].x) + (boxCorners[i].y * boxCorners[i].y) - (aRadius * aRadius);
 
-			float a = (lines[i].x * lines[i].x) + (lines[i].y * lines[i].y);
-			float b = 2 * ((lines[i].x * boxCorners[i].x) + (lines[i].y * boxCorners[i].y));
-			float c = (boxCorners[i].x * boxCorners[i].x) + (boxCorners[i].y * boxCorners[i].y) - (aRadius * aRadius);
+				float delta = b * b - (4 * a * c);
+				if (delta >= 0)
+					return 1;
+			}
 
-			float delta = b * b - (4 * a * c);
-			if (delta > 0)
-				return 1;
-		}
 	}
 	return 0;
 
