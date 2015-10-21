@@ -164,7 +164,29 @@ void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
 	vec2 v2new = v2n + v2t;
 
 	sI.velocity = v1new;
+	vec2 rectPos = rect->getGeoInfo().getPos();
+	vec2 sphPos = sph->getGeoInfo().getPos();
 
+	if (rectPos.x < sphPos.x)
+	{
+		if (sI.velocity.x < 0)
+			sI.velocity.x = -sI.velocity.x;
+	}
+	else if (rectPos.x > sphPos.x)
+	{
+		if (sI.velocity.x > 0)
+			sI.velocity.x = -sI.velocity.x;
+	}
+	if (rectPos.y < sphPos.y)
+	{
+		if (sI.velocity.y < 0)
+			sI.velocity.y = -sI.velocity.y;
+	}
+	else if (rectPos.y > sphPos.y)
+	{
+		if (sI.velocity.y > 0)
+			sI.velocity.y = -sI.velocity.y;
+	}
 	sph->setPos(vec2(sPos.x + sI.velocity.x, sPos.y + sI.velocity.y));
 	sph->setForceInfo(sI);
 }
