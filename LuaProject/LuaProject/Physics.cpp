@@ -38,8 +38,10 @@ void Physics::collideSphereSphere(GameObject* sph1, GameObject* sph2)
 	vec2 normal = vec2(oPos2.x - oPos1.x, oPos2.y - oPos1.y);
 	vec2 unitVec = normal / (sqrt(normal.x*normal.x + normal.y*normal.y));
 
-	vec2 v1new = reflect(oI1.velocity, unitVec);
-	oI1.velocity = v1new;
+	vec2 v1new = normalize(reflect(oI1.velocity, unitVec));
+	float v1plus = -((oI1.mass - oI2.mass*(oI1.elasticity+0.5)) / (oI1.mass + oI2.mass))*length(oI1.velocity); //Elasticity +1 to give bumper some boost
+
+	oI1.velocity = v1new*v1plus;
 
 	sph1->setPos(vec2(oPos1.x + oI1.velocity.x, oPos1.y + oI1.velocity.y));
 	sph1->setForceInfo(oI1);
@@ -167,7 +169,7 @@ void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
 
 	vec2 v1new = normalize(reflect(sI.velocity, realBoxNormal));
 
-	float v1plus = ((sI.mass - rI.mass) / (sI.mass + rI.mass))*length(sI.velocity); //Calculate speed as if one-dimensional collision
+	float v1plus = ((sI.mass - rI.mass*sI.elasticity) / (sI.mass + rI.mass))*length(sI.velocity); //Calculate speed as if one-dimensional collision
 
 	vec2 origVel = sI.velocity;
 
