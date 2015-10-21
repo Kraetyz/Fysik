@@ -7,9 +7,9 @@ function resetGame()
 end
 
 
-buttonbajs = {-15, -5, -13, -7, "ExitGame.bmp", exitGame} -- NWx, NWy, SEx, SEy, name, function
-buttonheil = {-15, 6, -13, 4, "HEIL.bmp", resetGame} -- NWx, NWy, SEx, SEy, name, function
+buttonexit = {-15, -5, -13, -7, "ExitGame.bmp", exitGame} -- NWx, NWy, SEx, SEy, name, function
+buttonreset = {-15, 6, -13, 4, "reset.bmp", resetGame} -- NWx, NWy, SEx, SEy, name, function
 
 
 nrOfButtons = 2
-buttonList = {buttonbajs, buttonheil}
+buttonList = {buttonexit, buttonreset}

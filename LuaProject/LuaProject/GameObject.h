@@ -86,6 +86,7 @@ public:
 	void setForceInfo(ForceInfo fI);
 
 	MomentInfo getMomentInfo(){ return mInfo; }
+	void setMomentInfo(MomentInfo mI);
 
 	bool checkIfLastCollided(GameObject* obj);
 };

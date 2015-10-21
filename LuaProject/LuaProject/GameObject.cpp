@@ -252,6 +252,12 @@ void GameObject::setForceInfo(ForceInfo fI)
 	fInfo.velocity = fI.velocity;
 }
 
+void GameObject::setMomentInfo(MomentInfo mI)
+{
+	mInfo.acceleration = mI.acceleration;
+	mInfo.velocity = mI.velocity;
+}
+
 bool GameObject::checkIfLastCollided(GameObject* obj)
 {
 	if (lastCollided == obj)
