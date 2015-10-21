@@ -83,7 +83,7 @@ string Game::update()
 		player->applyForce(vec2(0, -pForce));
 
 	Physics* p = Physics::getPhysics();
-	p->gravity(player);
+	//p->gravity(player);
 
 	collide(player);
 
@@ -96,7 +96,7 @@ string Game::update()
 
 void Game::collide(GameObject* player)
 {
-	sortAllObjects();
+	findClosestObject();
 	Geometry playerGeo = player->getGeoInfo();
 	bool hit = false;
 	for (int c = 0; c < allObjects.size() && !hit; c++)
@@ -104,11 +104,15 @@ void Game::collide(GameObject* player)
 		hit = playerGeo.checkCollision(player, allObjects[c]);
 		if (hit)
 		{
-			Physics* p = Physics::getPhysics();
-			p->collide(player, allObjects[c]);
+			if (!player->checkIfLastCollided(allObjects[c]))
+			{
+				Physics* p = Physics::getPhysics();
+				p->collide(player, allObjects[c]);
+			}
 			return;
 		}
 	}
+	player->checkIfLastCollided(nullptr);
 }
 
 void Game::restart()
@@ -196,7 +200,7 @@ void Game::loadMap()
 	in.close();
 }
 
-void Game::sortAllObjects()
+void Game::findClosestObject()
 {
 	vec2 pPos = player->getGeoInfo().getPos();
 	int shortestIndex = 0;

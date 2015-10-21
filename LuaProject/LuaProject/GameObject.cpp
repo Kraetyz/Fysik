@@ -256,3 +256,11 @@ void GameObject::setForceInfo(ForceInfo fI)
 	fInfo.acceleration = fI.acceleration;
 	fInfo.velocity = fI.velocity;
 }
+
+bool GameObject::checkIfLastCollided(GameObject* obj)
+{
+	if (lastCollided == obj)
+		return true;
+	lastCollided = obj;
+	return false;
+}

@@ -39,6 +39,8 @@ struct MomentInfo
 class GameObject
 {
 private:
+	GameObject* lastCollided = 0;
+
 	vec2 UV[4];
 	float sizeX, sizeY;
 	string clr;
@@ -81,6 +83,8 @@ public:
 
 	ForceInfo getForceInfo(){return fInfo;}
 	void setForceInfo(ForceInfo fI);
+
+	bool checkIfLastCollided(GameObject* obj);
 };
 
 #endif

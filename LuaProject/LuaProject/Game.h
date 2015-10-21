@@ -27,7 +27,7 @@ private:
 
 	void collide(GameObject* player);
 
-	void sortAllObjects();
+	void findClosestObject();
 public:
 	Game();
 	~Game();
