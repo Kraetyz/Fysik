@@ -196,7 +196,7 @@ void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
 	if (interPoint >= 0 && interPoint <= 1)
 	{
 		angularToLinearVelocity(sph, rect, corner1, corner2, interPoint);
-		//linearToAngularVelocity(sph, rect, interPoint);
+		linearToAngularVelocity(sph, rect, corner1, corner2, interPoint);
 	}
 }
 
@@ -234,7 +234,7 @@ float Physics::getIntersectPoint(GameObject* sph, GameObject* rect, int corner1,
 		intSecPoint = sphPos2 + (fval1 * sphVec);
 	}
 
-	return fval2;
+	return fval2 + sph->getGeoInfo().getRadius();
 
 }
 
@@ -273,7 +273,7 @@ void Physics::angularToLinearVelocity(GameObject* sph, GameObject* rect, int cor
 
 }
 
-void Physics::linearToAngularVelocity(GameObject* sph, GameObject* rect, vec2 interPoint)
+void Physics::linearToAngularVelocity(GameObject* sph, GameObject* rect, int corner1, int corner2, float intersectVal)
 {
 
 }
