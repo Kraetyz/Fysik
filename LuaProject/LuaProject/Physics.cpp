@@ -261,7 +261,49 @@ void Physics::angularToLinearVelocity(GameObject* sph, GameObject* rect, int cor
 
 void Physics::linearToAngularVelocity(GameObject* sph, GameObject* rect, int corner1, int corner2, float intersectVal)
 {
+	vec2 corners[4];
+	rect->getUV(corners);
 
+	vec2 line = corners[corner2] - corners[corner1];
+
+	float lineLength = length(line);
+
+
+	vec2 origVel = sph->getForceInfo().velocity;
+	float r = intersectVal - (lineLength / 2);
+	if (intersectVal > (lineLength / 2))
+	{
+		r = intersectVal - (lineLength / 2);
+
+		float velocity = r * rect->getMomentInfo().velocity;
+
+		velocity = abs(velocity);
+
+		vec2 velocityVec(0, 0);
+		if (sph->getForceInfo().velocity.x < 0)
+			velocityVec.x += velocity;
+		else
+			velocityVec.x -= velocity;
+		if (sph->getForceInfo().velocity.y > 0)
+			velocityVec.y += velocity;
+		else
+			velocityVec.y -= velocity;
+		
+		
+		//we remove the extra linear velocity added from the angular velocity in the previosu function
+		origVel += velocityVec;
+		}
+
+		float angularSpeed = length(origVel) / r;
+
+		MomentInfo mI = rect->getMomentInfo();
+		mI.velocity += angularSpeed;
+		rect->setMomentInfo(mI);
+		//sph->getGeoInfo().setPos(vec2(sph->getGeoInfo().getPos().x + velocityVec.x, sph->getGeoInfo().getPos().y + velocityVec.y));
+		//ForceInfo fI = sph->getForceInfo();
+		//fI.velocity += velocityVec;
+		//sph->setForceInfo(fI);
+	
 }
 
 void Physics::collideRectRect(GameObject* rect1, GameObject* rect2)
