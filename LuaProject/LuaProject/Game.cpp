@@ -17,8 +17,6 @@ Game::~Game()
 	{
 		delete allObjects[c];
 	}
-
-	Physics::release();
 }
 
 void Game::Render()

@@ -12,6 +12,7 @@
 #pragma comment(lib, "glew32.lib")
 
 #include "Game.h"
+#include "Physics.h"
 #include "Menu.h"
 #include <stdio.h>
 #include <io.h>
@@ -20,6 +21,8 @@
 #include "Lua/lua.hpp"
 #include "Lua/lauxlib.h"
 #include "Lua/lualib.h"
+
+//#include <vld.h>
 
 lua_State* buttonState;
 Button buttons[10];
@@ -90,7 +93,8 @@ static int goToGame(lua_State* L)
 
 static int restartGame(lua_State* L)
 {
-	((Game*)state)->restart();
+	delete state;
+	state = new Game();
 	return 0;
 }
 
@@ -218,6 +222,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		wglDeleteContext(hRC);
 		DestroyWindow(window);
 	}
+
+	Physics::release();
+	delete state;
 
 	lua_close(buttonState);
 
