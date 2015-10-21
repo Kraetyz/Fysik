@@ -1,2 +1,2 @@
 ballmass 50
-spinner 0.0006
+spinner 0.006

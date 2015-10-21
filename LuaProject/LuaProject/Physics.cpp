@@ -247,27 +247,29 @@ void Physics::angularToLinearVelocity(GameObject* sph, GameObject* rect, int cor
 
 	float lineLength = length(line);
 
-	float r = intersectVal - (lineLength / 2);
+	if (intersectVal > (lineLength / 2))
+	{
+		float r = intersectVal - (lineLength / 2);
 
-	float velocity = r * rect->getMomentInfo().velocity;
+		float velocity = r * rect->getMomentInfo().velocity;
 
-	velocity = abs(velocity);
+		velocity = abs(velocity);
 
-	vec2 velocityVec(0, 0);
-	if (sph->getForceInfo().velocity.x > 0)
-		velocityVec.x += velocity;
-	else
-		velocityVec.x -= velocity;
-	if (sph->getForceInfo().velocity.y > 0)
-		velocityVec.y += velocity;
-	else
-		velocityVec.y -= velocity;
+		vec2 velocityVec(0, 0);
+		if (sph->getForceInfo().velocity.x > 0)
+			velocityVec.x += velocity;
+		else
+			velocityVec.x -= velocity;
+		if (sph->getForceInfo().velocity.y > 0)
+			velocityVec.y += velocity;
+		else
+			velocityVec.y -= velocity;
 
-	sph->getGeoInfo().setPos(vec2(sph->getGeoInfo().getPos().x + velocityVec.x, sph->getGeoInfo().getPos().y + velocityVec.y));
-	ForceInfo fI = sph->getForceInfo();
-	fI.velocity += velocityVec;
-	sph->setForceInfo(fI);
-
+		sph->getGeoInfo().setPos(vec2(sph->getGeoInfo().getPos().x + velocityVec.x, sph->getGeoInfo().getPos().y + velocityVec.y));
+		ForceInfo fI = sph->getForceInfo();
+		fI.velocity += velocityVec;
+		sph->setForceInfo(fI);
+	}
 
 }
 
