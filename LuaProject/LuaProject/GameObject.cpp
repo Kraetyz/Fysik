@@ -27,9 +27,9 @@ GameObject::GameObject()
 
 GameObject::GameObject(vec2 pos, string texName, float sX, float sY, string type)
 {
-	origPos = pos;
 	pos.x = pos.x*0.064;
 	pos.y = pos.y*0.064;
+	origPos = pos;
 	sizeX = sX;
 	sizeY = sY;
 	UV[NW] = vec2(pos.x - sizeX*0.032, pos.y - sizeY*0.032);
@@ -61,11 +61,6 @@ void GameObject::getUV(vec2 toFill[])
 	toFill[NE] = UV[NE];
 	toFill[SW] = UV[SW];
 	toFill[SE] = UV[SE];
-}
-
-vec2 GameObject::getOrigPos()
-{
-	return origPos;
 }
 
 void GameObject::setInertia()
@@ -263,4 +258,19 @@ bool GameObject::checkIfLastCollided(GameObject* obj)
 		return true;
 	lastCollided = obj;
 	return false;
+}
+
+
+void GameObject::reset()
+{
+	setPos(origPos);
+	stop();
+}
+
+void GameObject::stop()
+{
+	fInfo.acceleration = vec2(0, 0);
+	fInfo.velocity = vec2(0, 0);
+	mInfo.acceleration = 0;
+	mInfo.velocity = 0;
 }

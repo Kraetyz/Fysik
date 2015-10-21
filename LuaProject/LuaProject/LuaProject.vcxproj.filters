@@ -100,13 +100,13 @@
     <Text Include="menuButtons.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="testscript.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="gameButt.txt">
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="Map1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="mapdata.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

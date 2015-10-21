@@ -1,10 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "Lua/lua.hpp"
-#include "Lua/lauxlib.h"
-#include "Lua/lualib.h"
-
 #include <iostream>
 #include <vector>
 
@@ -19,11 +15,8 @@ class Game : public State
 {
 private:
 	GameObject* player = 0;
+	GameObject* spinner = 0;
 	vector<GameObject*> allObjects;
-
-	lua_State* L = 0;
-	//lua_State* map = 0;
-	int luaErrorHandlerPos = 0;
 
 	void collide(GameObject* player);
 

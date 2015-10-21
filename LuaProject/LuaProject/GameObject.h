@@ -70,7 +70,8 @@ public:
 	GameObject(vec2 pos, string texName, float sizeX, float sizeY, string type);
 	void getUV(vec2 toFill[]);
 	GLuint getText();
-	vec2 getOrigPos();
+	void reset();
+	void stop();
 	void setPos(vec2 pos);
 	Geometry getGeoInfo(){return gInfo;}
 	void move(float dx, float dy);

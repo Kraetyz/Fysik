@@ -122,7 +122,7 @@
     <Text Include="map.txt" />
     <Text Include="Map1.txt" />
     <Text Include="menuButtons.txt" />
-    <Text Include="testscript.txt" />
+    <Text Include="mapdata.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Error.lua" />
