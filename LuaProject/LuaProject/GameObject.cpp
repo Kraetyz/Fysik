@@ -47,6 +47,7 @@ GameObject::GameObject(vec2 pos, string texName, float sX, float sY, string type
 	fInfo.velocity = vec2(0,0);
 	fInfo.acceleration = vec2(0,0);
 	fInfo.mass = 50.0f; //SAMMA SOM MINFO MASSAN PLS ÄNDRA BÄGGE
+	fInfo.elasticity = 1.0f;
 
 	mInfo.acceleration = 0;
 	mInfo.velocity = 0;
@@ -266,6 +267,10 @@ bool GameObject::checkIfLastCollided(GameObject* obj)
 	return false;
 }
 
+void GameObject::setElasticity(float e)
+{
+	fInfo.elasticity = e;
+}
 
 void GameObject::reset()
 {

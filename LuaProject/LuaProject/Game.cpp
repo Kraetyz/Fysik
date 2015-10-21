@@ -49,6 +49,11 @@ string Game::update()
 				ss >> token;
 				player->setMass(atof(token.c_str()));
 			}
+			if (token == "ballelast")
+			{
+				ss >> token;
+				player->setElasticity(atof(token.c_str()));
+			}
 			if (token == "spinner")
 			{
 				ss >> token;
@@ -272,6 +277,11 @@ void Game::loadMap()
 		{
 			ss >> token;
 			player->setMass(atof(token.c_str()));
+		}
+		if (token == "ballelast")
+		{
+			ss >> token;
+			player->setElasticity(atof(token.c_str()));
 		}
 		if (token == "spinner")
 		{

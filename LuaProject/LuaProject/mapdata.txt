@@ -1,2 +1,3 @@
 ballmass 50
+ballelast 1
 spinner 0.006

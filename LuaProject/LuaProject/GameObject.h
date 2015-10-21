@@ -22,6 +22,7 @@ struct ForceInfo
 	vec2 acceleration;
 	vec2 velocity;
 	float mass;
+	float elasticity;
 };
 
 struct MomentInfo
@@ -81,6 +82,7 @@ public:
 
 	void setAngle(float angle);
 	void setMass(float m);
+	void setElasticity(float e);
 
 	ForceInfo getForceInfo(){return fInfo;}
 	void setForceInfo(ForceInfo fI);
