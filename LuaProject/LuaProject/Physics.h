@@ -15,7 +15,7 @@ private:
 
 	float getIntersectPoint(GameObject* sph, GameObject* rect, int corner1, int corner2, vec2 sphVel);
 	void angularToLinearVelocity(GameObject* sph, GameObject* rect, int corner1, int corner2, float intersectVal);
-	void linearToAngularVelocity(GameObject* sph, GameObject* rect, int corner1, int corner2, float intersectVal);
+	
 public:
 	static Physics* getPhysics();
 

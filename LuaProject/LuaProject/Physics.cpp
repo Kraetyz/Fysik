@@ -38,10 +38,8 @@ void Physics::collideSphereSphere(GameObject* sph1, GameObject* sph2)
 	vec2 normal = vec2(oPos2.x - oPos1.x, oPos2.y - oPos1.y);
 	vec2 unitVec = normal / (sqrt(normal.x*normal.x + normal.y*normal.y));
 
-	vec2 v1new = normalize(reflect(oI1.velocity, unitVec));
-	float v1plus = -((oI1.mass - oI2.mass*oI1.elasticity) / (oI1.mass + oI2.mass))*length(oI1.velocity);
-
-	oI1.velocity = v1new*v1plus;
+	vec2 v1new = reflect(oI1.velocity, unitVec);
+	oI1.velocity = v1new;
 
 	sph1->setPos(vec2(oPos1.x + oI1.velocity.x, oPos1.y + oI1.velocity.y));
 	sph1->setForceInfo(oI1);
@@ -169,7 +167,7 @@ void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
 
 	vec2 v1new = normalize(reflect(sI.velocity, realBoxNormal));
 
-	float v1plus = ((sI.mass - rI.mass*sI.elasticity) / (sI.mass + rI.mass))*length(sI.velocity); //Calculate speed as if one-dimensional collision
+	float v1plus = ((sI.mass - rI.mass) / (sI.mass + rI.mass))*length(sI.velocity); //Calculate speed as if one-dimensional collision
 
 	vec2 origVel = sI.velocity;
 
@@ -184,7 +182,7 @@ void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
 	if (interPoint >= 0 && interPoint <= 1)
 	{
 		angularToLinearVelocity(sph, rect, corner1, corner2, interPoint);
-		linearToAngularVelocity(sph, rect, corner1, corner2, interPoint);
+		
 	}
 }
 
@@ -261,55 +259,7 @@ void Physics::angularToLinearVelocity(GameObject* sph, GameObject* rect, int cor
 
 }
 
-void Physics::linearToAngularVelocity(GameObject* sph, GameObject* rect, int corner1, int corner2, float intersectVal)
-{
-	vec2 corners[4];
-	rect->getUV(corners);
 
-	vec2 line = corners[corner2] - corners[corner1];
-
-	float lineLength = length(line);
-
-
-	vec2 origVel = sph->getForceInfo().velocity;
-	float r = intersectVal - (lineLength / 2);
-	if (intersectVal > (lineLength / 2))
-	{
-		r = intersectVal - (lineLength / 2);
-
-		float velocity = r * rect->getMomentInfo().velocity;
-
-		velocity = abs(velocity);
-
-		vec2 velocityVec(0, 0);
-		if (sph->getForceInfo().velocity.x < 0)
-			velocityVec.x += velocity;
-		else
-			velocityVec.x -= velocity;
-		if (sph->getForceInfo().velocity.y > 0)
-			velocityVec.y += velocity;
-		else
-			velocityVec.y -= velocity;
-		
-		
-		//we remove the extra linear velocity added from the angular velocity in the previosu function
-		origVel += velocityVec;
-		}
-
-		float angularSpeed = length(origVel) / r;
-
-		if (intersectVal < (lineLength / 2))
-			angularSpeed = -angularSpeed;
-
-		MomentInfo mI = rect->getMomentInfo();
-		mI.velocity += angularSpeed;
-		rect->setMomentInfo(mI);
-		//sph->getGeoInfo().setPos(vec2(sph->getGeoInfo().getPos().x + velocityVec.x, sph->getGeoInfo().getPos().y + velocityVec.y));
-		//ForceInfo fI = sph->getForceInfo();
-		//fI.velocity += velocityVec;
-		//sph->setForceInfo(fI);
-	
-}
 
 void Physics::collideRectRect(GameObject* rect1, GameObject* rect2)
 {
