@@ -298,6 +298,9 @@ void Physics::linearToAngularVelocity(GameObject* sph, GameObject* rect, int cor
 
 		float angularSpeed = length(origVel) / r;
 
+		if (intersectVal < (lineLength / 2))
+			angularSpeed = -angularSpeed;
+
 		MomentInfo mI = rect->getMomentInfo();
 		mI.velocity += angularSpeed;
 		rect->setMomentInfo(mI);
