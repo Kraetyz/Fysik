@@ -14,6 +14,7 @@ using namespace std;
 class Game : public State
 {
 private:
+	bool gravityOn = true;
 	GameObject* player = 0;
 	GameObject* spinner = 0;
 	vector<GameObject*> allObjects;

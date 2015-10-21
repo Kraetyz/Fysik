@@ -67,6 +67,9 @@ string Game::update()
 	if (GetKeyState('P') && GetAsyncKeyState('P'))
 		player->reset();
 
+	if (GetKeyState('G') && GetAsyncKeyState('G'))
+		gravityOn = (gravityOn + 1) % 2;
+
 	vec2 pPlayer;
 	pPlayer = player->getGeoInfo().getPos();
 	float pForce = 0.00982;
@@ -82,7 +85,9 @@ string Game::update()
 		player->applyForce(vec2(0, -pForce));
 
 	Physics* p = Physics::getPhysics();
-	p->gravity(player);
+
+	if (gravityOn)
+		p->gravity(player);
 
 	collide(player);
 
