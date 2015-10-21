@@ -32,29 +32,17 @@ void Physics::collideSphereSphere(GameObject* sph1, GameObject* sph2)
 	ForceInfo oI2 = sph2->getForceInfo();
 
 	//http://www.vobarian.com/collisions/2dcollisions2.pdf
+	//Changed this implementation. The initial implenentation stopped working at some point, so now I use a modified version of the sphere vs rect reflect thing
 	vec2 oPos1 = oG1.getPos();
 	vec2 oPos2 = oG2.getPos();
 	vec2 normal = vec2(oPos2.x - oPos1.x, oPos2.y - oPos1.y);
 	vec2 unitVec = normal / (sqrt(normal.x*normal.x + normal.y*normal.y));
-	vec2 tangent = vec2(-unitVec.y, unitVec.x);
 
-	float v1normal = dot(unitVec, oI1.velocity);
-	float v2normal = dot(unitVec, oI2.velocity);
-	float v1tangent = dot(tangent, oI1.velocity);
-
-	v1normal = (v1normal*(oI1.mass - oI2.mass) + 2 * oI2.mass*v2normal) / (oI1.mass + oI2.mass);
-
-	vec2 v1n = unitVec*v1normal;
-	vec2 v1t = unitVec*v1tangent;
-
-	vec2 v1new = v1n + v1t;
-
-	oI1.velocity = -v1new;
+	vec2 v1new = reflect(oI1.velocity, unitVec);
+	oI1.velocity = v1new;
 
 	sph1->setPos(vec2(oPos1.x + oI1.velocity.x, oPos1.y + oI1.velocity.y));
 	sph1->setForceInfo(oI1);
-
-	sph2->setForceInfo(oI2);
 }
 
 void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
@@ -177,9 +165,7 @@ void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
 	realBoxNormal.x = boxNormal.x * glm::cos(angle) - boxNormal.y * glm::sin(angle);
 	realBoxNormal.y = boxNormal.x * glm::sin(angle) + boxNormal.y * glm::cos(angle);
 
-	vec2 v1new = -normalize(normalize(sI.velocity) - realBoxNormal);
-	
-	v1new = normalize(reflect(sI.velocity, realBoxNormal));
+	vec2 v1new = normalize(reflect(sI.velocity, realBoxNormal));
 
 	float v1plus = ((sI.mass - rI.mass) / (sI.mass + rI.mass))*length(sI.velocity); //Calculate speed as if one-dimensional collision
 

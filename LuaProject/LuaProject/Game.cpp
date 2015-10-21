@@ -237,6 +237,29 @@ void Game::loadMap()
 			allObjects[allObjects.size() - 1]->setAngle(angle);
 			allObjects[allObjects.size() - 1]->setMass(6000000.0f);
 		}
+		else if (token == "ball")
+		{
+			token = "";
+			ss >> token;
+			float wX = atof(token.c_str());
+
+			token = "";
+			ss >> token;
+			float wY = atof(token.c_str());
+
+			vec2 size;
+
+			token = "";
+			ss >> token;
+			size.x = atof(token.c_str());
+			token = "";
+			ss >> token;
+			size.y = atof(token.c_str());
+
+			allObjects.push_back(new GameObject(vec2(wX, wY), "ball2.bmp", size.x, size.y, "circle"));
+			allObjects[allObjects.size() - 1]->setMass(6000000.0f);
+		}
+
 	}
 	in.close();
 
