@@ -89,8 +89,8 @@ string Game::update()
 	player->update();
 	spinner->update();
 
-	for (int c=0; c<allObjects.size(); c++)
-		allObjects[c]->update();
+	//for (int c=0; c<allObjects.size(); c++)
+	//	allObjects[c]->update();
 
 	return "";
 }
