@@ -60,6 +60,11 @@ string Game::update()
 				spinner->stop();
 				spinner->applyMoment(atof(token.c_str()));
 			}
+			if (token == "bumper")
+			{
+				ss >> token;
+				Physics::setBumper(atof(token.c_str()));
+			}
 		}
 		ballData.close();
 	}
@@ -68,7 +73,12 @@ string Game::update()
 		player->reset();
 
 	if (GetKeyState('G') && GetAsyncKeyState('G'))
-		gravityOn = (gravityOn + 1) % 2;
+	{
+		if (gravityOn)
+			gravityOn = false;
+		else
+			gravityOn = true;
+	}
 
 	vec2 pPlayer;
 	pPlayer = player->getGeoInfo().getPos();
@@ -292,6 +302,11 @@ void Game::loadMap()
 		{
 			ss >> token;
 			spinMoment = atof(token.c_str());
+		}
+		if (token == "bumper")
+		{
+			ss >> token;
+			Physics::setBumper(atof(token.c_str()));
 		}
 	}
 	mapData.close();

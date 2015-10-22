@@ -7,6 +7,7 @@ class Physics
 {
 private:
 	static Physics* singleton;
+	static float bumperBonus;
 	Physics();
 	
 	void collideSphereSphere(GameObject* sph1, GameObject* sph2);
@@ -18,6 +19,8 @@ private:
 	
 public:
 	static Physics* getPhysics();
+	
+	static void setBumper(float f);
 
 	void gravity(GameObject* obj);
 

@@ -2,6 +2,8 @@
 
 Physics* Physics::singleton = 0;
 
+float Physics::bumperBonus = 0.0f;
+
 Physics::Physics()
 {
 }
@@ -17,6 +19,11 @@ void Physics::release()
 {
 	if (singleton)
 		delete singleton;
+}
+
+void Physics::setBumper(float f)
+{
+	bumperBonus = f;
 }
 
 void Physics::gravity(GameObject* obj)
@@ -39,7 +46,7 @@ void Physics::collideSphereSphere(GameObject* sph1, GameObject* sph2)
 	vec2 unitVec = normal / (sqrt(normal.x*normal.x + normal.y*normal.y));
 
 	vec2 v1new = normalize(reflect(oI1.velocity, unitVec));
-	float v1plus = -((oI1.mass - oI2.mass*(oI1.elasticity+0.5)) / (oI1.mass + oI2.mass))*length(oI1.velocity); //Elasticity +1 to give bumper some boost
+	float v1plus = -((oI1.mass - oI2.mass*(oI1.elasticity+bumperBonus)) / (oI1.mass + oI2.mass))*length(oI1.velocity); //Elasticity +bumperBonus for fun
 
 	oI1.velocity = v1new*v1plus;
 
