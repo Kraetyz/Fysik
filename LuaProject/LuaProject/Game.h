@@ -15,6 +15,7 @@ class Game : public State
 {
 private:
 	bool gravityOn = true;
+	bool gPressed = false;
 	GameObject* player = 0;
 	GameObject* spinner = 0;
 	vector<GameObject*> allObjects;

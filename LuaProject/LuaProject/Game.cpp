@@ -74,11 +74,17 @@ string Game::update()
 
 	if (GetKeyState('G') && GetAsyncKeyState('G'))
 	{
-		if (gravityOn)
-			gravityOn = false;
-		else
-			gravityOn = true;
+		if (!gPressed)
+		{
+			if (gravityOn)
+				gravityOn = false;
+			else
+				gravityOn = true;
+			gPressed = true;
+		}
 	}
+	else
+		gPressed = false;
 
 	vec2 pPlayer;
 	pPlayer = player->getGeoInfo().getPos();
