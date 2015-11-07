@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <io.h>
 #include <fcntl.h>
+#include <ctime>
 
 #include "Lua/lua.hpp"
 #include "Lua/lauxlib.h"
@@ -125,10 +126,17 @@ void buttonRender()
 	}
 }
 
+clock_t start = std::clock();
+float deltaTime = 0.0f;
+float tiktok;
+float lastClock = 0.0f;
+
 void Update()
 {
-	Sleep(1000 / 60);
-	string msg = state->update();
+	tiktok = float((std::clock() - start) / (double)CLOCKS_PER_SEC);
+	deltaTime = tiktok - lastClock;
+	lastClock = tiktok;
+	string msg = state->update(deltaTime);
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	buttonRender();

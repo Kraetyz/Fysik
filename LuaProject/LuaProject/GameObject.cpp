@@ -222,7 +222,7 @@ void GameObject::applyMoment(float M)
 	moments.push_back(M);
 }
 
-void GameObject::update()
+void GameObject::update(float dT)
 {
 	vec2 resultantF = vec2(0, 0);
 	for (int c = 0; c < forces.size(); c++)
@@ -232,7 +232,7 @@ void GameObject::update()
 	forces.clear();
 	vec2 a = resultantF / fInfo.mass;
 	fInfo.acceleration = a;
-	fInfo.velocity += fInfo.acceleration;
+	fInfo.velocity += fInfo.acceleration*dT;
 	move(fInfo.velocity.x, fInfo.velocity.y);
 
 	float resultantM = 0;
@@ -243,7 +243,7 @@ void GameObject::update()
 	moments.clear();
 	float alpha = resultantM / mInfo.inertia;
 	mInfo.acceleration = alpha;
-	mInfo.velocity += mInfo.acceleration;
+	mInfo.velocity += mInfo.acceleration*dT;
 	rotate(mInfo.velocity);
 }
 

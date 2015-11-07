@@ -28,7 +28,7 @@ void Physics::setBumper(float f)
 
 void Physics::gravity(GameObject* obj)
 {
-	obj->applyForce(vec2(0, -0.0000982*obj->getForceInfo().mass));
+	obj->applyForce(vec2(0, -0.00982*obj->getForceInfo().mass));
 }
 
 void Physics::collideSphereSphere(GameObject* sph1, GameObject* sph2)

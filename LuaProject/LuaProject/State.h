@@ -25,7 +25,7 @@ protected:
 public:
 	State();
 	virtual ~State();
-	virtual string update() = 0;
+	virtual string update(float dT) = 0;
 	virtual void Render() = 0;
 	void RenderButton(Button* toRender);
 

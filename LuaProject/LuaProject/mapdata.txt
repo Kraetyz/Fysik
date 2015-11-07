@@ -1,4 +1,4 @@
 ballmass 50
 ballelast 1
-spinner 0.0005
+spinner 0.5
 bumper 0

@@ -27,7 +27,7 @@ public:
 	Game();
 	~Game();
 	void Render();
-	string update();
+	string update(float dT);
 	void restart();
 	void loadMap();
 };

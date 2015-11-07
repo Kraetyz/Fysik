@@ -78,7 +78,7 @@ public:
 	void move(float dx, float dy);
 	void applyForce(vec2 F);
 	void applyMoment(float M);
-	void update();
+	void update(float dT);
 
 	void setAngle(float angle);
 	void setMass(float m);

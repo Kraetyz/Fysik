@@ -9,7 +9,7 @@ Menu::~Menu()
 {
 }
 
-string Menu::update()
+string Menu::update(float dT)
 {
 	if (GetKeyState('G') && GetAsyncKeyState('G'))
 		return "StartGame";

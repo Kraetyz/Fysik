@@ -30,7 +30,7 @@ void Game::Render()
 	}
 }
 
-string Game::update()
+string Game::update(float dT)
 {
 	if (GetKeyState('R') && GetAsyncKeyState('R'))
 	{
@@ -88,7 +88,7 @@ string Game::update()
 
 	vec2 pPlayer;
 	pPlayer = player->getGeoInfo().getPos();
-	float pForce = 0.00982;
+	float pForce = 0.0982;
 
 	if (GetKeyState('A') && GetAsyncKeyState('A'))
 		player->applyForce(vec2(-pForce, 0));
@@ -107,8 +107,8 @@ string Game::update()
 
 	collide(player);
 
-	player->update();
-	spinner->update();
+	player->update(dT);
+	spinner->update(dT);
 
 	//for (int c=0; c<allObjects.size(); c++)
 	//	allObjects[c]->update();

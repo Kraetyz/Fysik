@@ -9,7 +9,7 @@ private:
 public:
 	Menu();
 	~Menu();
-	string update();
+	string update(float dT);
 	void Render();
 };
 #endif
