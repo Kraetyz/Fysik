@@ -123,19 +123,19 @@ void GameObject::updateUV(float angle)
 	}
 }
 
-void GameObject::move(float dx, float dy)
+void GameObject::move(float dx, float dy, float dt)
 {
-	updateUV(dx, dy);
+	updateUV(dx*dt, dy*dt);
 	vec2 newpos = gInfo.getPos();
-	newpos.x += dx;
-	newpos.y += dy;
+	newpos.x += dx*dt;
+	newpos.y += dy*dt;
 	gInfo.setPos(newpos);
 }
 
-void GameObject::rotate(float dv)
+void GameObject::rotate(float dv, float dt)
 {
-	gInfo.setAngle(gInfo.getAngle() + dv);
-	updateUV(dv);
+	gInfo.setAngle(gInfo.getAngle() + dv*dt);
+	updateUV(dv*dt);
 }
 
 void GameObject::emptyTexture()
@@ -233,7 +233,7 @@ void GameObject::update(float dT)
 	vec2 a = resultantF / fInfo.mass;
 	fInfo.acceleration = a;
 	fInfo.velocity += fInfo.acceleration*dT;
-	move(fInfo.velocity.x, fInfo.velocity.y);
+	move(fInfo.velocity.x, fInfo.velocity.y, dT);
 
 	float resultantM = 0;
 	for (int i = 0; i < moments.size(); i++)
@@ -244,7 +244,7 @@ void GameObject::update(float dT)
 	float alpha = resultantM / mInfo.inertia;
 	mInfo.acceleration = alpha;
 	mInfo.velocity += mInfo.acceleration*dT;
-	rotate(mInfo.velocity);
+	rotate(mInfo.velocity, dT);
 }
 
 void GameObject::setForceInfo(ForceInfo fI)
