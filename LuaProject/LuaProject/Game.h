@@ -20,7 +20,7 @@ private:
 	GameObject* spinner = 0;
 	vector<GameObject*> allObjects;
 
-	void collide(GameObject* player);
+	void collide(GameObject* player, float dt);
 
 	void findClosestObject();
 public:

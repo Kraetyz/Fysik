@@ -31,7 +31,7 @@ void Physics::gravity(GameObject* obj)
 	obj->applyForce(vec2(0, -0.00982*obj->getForceInfo().mass));
 }
 
-void Physics::collideSphereSphere(GameObject* sph1, GameObject* sph2)
+void Physics::collideSphereSphere(GameObject* sph1, GameObject* sph2, float dt)
 {
 	Geometry oG1 = sph1->getGeoInfo();
 	Geometry oG2 = sph2->getGeoInfo();
@@ -50,11 +50,11 @@ void Physics::collideSphereSphere(GameObject* sph1, GameObject* sph2)
 
 	oI1.velocity = v1new*v1plus;
 
-	sph1->setPos(vec2(oPos1.x + oI1.velocity.x, oPos1.y + oI1.velocity.y));
+	sph1->setPos(vec2(oPos1.x + oI1.velocity.x*dt, oPos1.y + oI1.velocity.y*dt));
 	sph1->setForceInfo(oI1);
 }
 
-void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
+void Physics::collideSphereRect(GameObject* sph, GameObject* rect, float dt)
 {
 	Geometry sG = sph->getGeoInfo();
 	Geometry rG = rect->getGeoInfo();
@@ -182,7 +182,7 @@ void Physics::collideSphereRect(GameObject* sph, GameObject* rect)
 
 	sI.velocity = -v1new*v1plus;
 
-	sph->setPos(vec2(sPos.x + sI.velocity.x, sPos.y + sI.velocity.y));
+	sph->setPos(vec2(sPos.x + sI.velocity.x*dt, sPos.y + sI.velocity.y*dt));
 	
 	sph->setForceInfo(sI);
 
@@ -270,25 +270,25 @@ void Physics::angularToLinearVelocity(GameObject* sph, GameObject* rect, int cor
 
 
 
-void Physics::collideRectRect(GameObject* rect1, GameObject* rect2)
+void Physics::collideRectRect(GameObject* rect1, GameObject* rect2, float dt)
 {
 }
 
-void Physics::collide(GameObject* obj1, GameObject* obj2)
+void Physics::collide(GameObject* obj1, GameObject* obj2, float dt)
 {
 	//collideSphereSphere(obj1, obj2);
 	Geometry oI1 = obj1->getGeoInfo();
 	Geometry oI2 = obj2->getGeoInfo();
 
 	if (oI1.getRadius() > 0.0f && oI2.getRadius() > 0.0f)
-		collideSphereSphere(obj1, obj2);
+		collideSphereSphere(obj1, obj2, dt);
 	else if(oI1.getRadius() < 0.0f && oI2.getRadius() < 0.0f)
-		collideRectRect(obj1, obj2);
+		collideRectRect(obj1, obj2, dt);
 	else
 	{
 		if (oI1.getRadius() < 0.0f)
-			collideSphereRect(obj2, obj1);
+			collideSphereRect(obj2, obj1, dt);
 		else
-			collideSphereRect(obj1, obj2);
+			collideSphereRect(obj1, obj2, dt);
 	}
 }

@@ -60,7 +60,7 @@ private:
 
 	void updateUV(float angle); //Updates UV ROTATION
 	
-	void rotate(float dv);
+	void rotate(float dv, float dt);
 
 	void setInertia();
 protected:
@@ -75,7 +75,7 @@ public:
 	void stop();
 	void setPos(vec2 pos);
 	Geometry getGeoInfo(){return gInfo;}
-	void move(float dx, float dy);
+	void move(float dx, float dy, float dt);
 	void applyForce(vec2 F);
 	void applyMoment(float M);
 	void update(float dT);

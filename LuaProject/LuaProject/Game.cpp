@@ -105,7 +105,7 @@ string Game::update(float dT)
 	if (gravityOn)
 		p->gravity(player);
 
-	collide(player);
+	collide(player, dT);
 
 	player->update(dT);
 	spinner->update(dT);
@@ -116,7 +116,7 @@ string Game::update(float dT)
 	return "";
 }
 
-void Game::collide(GameObject* player)
+void Game::collide(GameObject* player, float dt)
 {
 	findClosestObject();
 	Geometry playerGeo = player->getGeoInfo();
@@ -128,7 +128,7 @@ void Game::collide(GameObject* player)
 		if (!player->checkIfLastCollided(spinner))
 		{
 			Physics* p = Physics::getPhysics();
-			p->collide(player, spinner);
+			p->collide(player, spinner, dt);
 		}
 		return;
 	}
@@ -140,7 +140,7 @@ void Game::collide(GameObject* player)
 		{
 			if (!player->checkIfLastCollided(allObjects[c]))
 			{
-				p->collide(player, allObjects[c]);
+				p->collide(player, allObjects[c], dt);
 			}
 			return;
 		}
